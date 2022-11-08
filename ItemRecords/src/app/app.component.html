@@ -1,0 +1,15 @@
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+</head>
+
+<mat-toolbar color="primary">
+  <span><a routerLink="" class="title">Sběratel</a></span>
+  <a mat-button routerLink="/items" class="nav-button">Moje předměty</a>
+  <a mat-button routerLink="/item/add" class="nav-button">Přidat předmět</a>
+  <a mat-button routerLink="/shop" class="nav-button">Prodeje</a>
+</mat-toolbar>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
