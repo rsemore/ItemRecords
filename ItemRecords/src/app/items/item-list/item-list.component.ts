@@ -11,7 +11,7 @@ export class ItemListComponent implements OnInit {
 
   items: Item[] = [];
 
-  public displayedColumns: string[] = ['itemId', 'itemName', 'category', 'description'];
+  public displayedColumns: string[] = [/*'itemId', */'itemName', 'category', 'description'];
 
   constructor(private itemService: ItemService) { }
 

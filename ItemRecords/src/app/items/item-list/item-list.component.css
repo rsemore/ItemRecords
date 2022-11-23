@@ -1,27 +1,24 @@
-input.ng-invalid.ng-touched {
-  border-color: red;
+mat-sidenav {
+  width: 250px;
 }
 
-.error {
-  color: red
+mat-sidenav-content {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #FAFAFA;
+  height: calc(100vh - 64px - 30px);
+  overflow: auto;
 }
 
-.fill-remaining-space {
-  flex: 1 1 auto;
+.sidenav-line {
+  border-bottom: solid 1px #e7e7e7;
+  padding: 10px;
+  text-align: left;
+  transition: 0.3s;
 }
 
-.form {
-  min-width: 150px;
-  max-width: 500px;
-}
-
-.form-element {
-  padding: 5px 0px 5px 2px;
-  width: 100%;
-}
-
-.button {
-  width: 100%;
+.sidenav-line:hover {
+  background-color: #e1e1e1;
 }
 
 .inline-block {
@@ -29,8 +26,18 @@ input.ng-invalid.ng-touched {
 }
 
 table {
-  width: 80%;
-  padding-top: 15px;
+  width: 95%;
   display: inline-table;
   text-align: left;
+}
+
+
+.mat-flat-button {
+  margin: 15px;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.mat-flat-button:hover {
+  background-color: #4a2688;
 }

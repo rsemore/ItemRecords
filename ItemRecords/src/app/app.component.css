@@ -1,3 +1,7 @@
+.flexExpand {
+  flex: 1 1 auto;
+}
+
 .title {
   text-decoration: none;
   color: white;
@@ -27,7 +31,6 @@
 }
 
 .container {
-  padding-top: 15px;
   text-align: center;
 }
 
