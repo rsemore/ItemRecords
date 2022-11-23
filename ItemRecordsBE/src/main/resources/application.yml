@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/opr3db
+    username: postgres
+    password: password
+    driverClassName: org.postgresql.Driver
+    hikari:
+      schema: itemRecords
+
+  jpa:
+    # Show or not log for each sql query
+    showSql: true
+    hibernate:
+        ddlAuto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
