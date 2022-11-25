@@ -1,7 +1,7 @@
 package cz.osu.itemrecordsbe.itemOffer;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import cz.osu.itemrecordsbe.item.Item;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @Setter
 public class ItemOffer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int offerId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long offerId;
 
     @OneToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private Item itemId;
+    private Item item;
 
     private int price;
     private String description;

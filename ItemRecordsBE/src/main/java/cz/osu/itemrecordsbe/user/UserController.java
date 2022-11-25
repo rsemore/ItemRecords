@@ -1,25 +1,38 @@
 package cz.osu.itemrecordsbe.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/users/")
+@CrossOrigin
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/all")
+    @GetMapping("all")
     ResponseEntity<List<AppUser>> getAll() {
         return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    @GetMapping(path = "{userId}")
+    ResponseEntity<AppUser> getUser(@PathVariable("userId") Long userId) {
+        AppUser appUser = userRepository.findByUserId(userId);
+        return new ResponseEntity(appUser, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "add")
+    ResponseEntity<String> addUser(@RequestBody AppUser user){
+        Long lastId = userRepository.findTopByOrderByUserIdDesc().getUserId();
+        lastId++;
+        user.setUserId(lastId);
+        userRepository.save(user);
+        return ResponseEntity.ok().build();
     }
 
 }
