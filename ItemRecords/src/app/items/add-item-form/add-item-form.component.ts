@@ -17,7 +17,7 @@ export class AddItemFormComponent implements OnInit {
     itemId: new FormControl(1, Validators.required),
     itemName: new FormControl("", Validators.required),
     category: new FormControl(Category.OTHER, Validators.required),
-    description: new FormControl("")
+    itemDescription: new FormControl("")
   })
 
   ngOnInit(): void {
@@ -27,8 +27,8 @@ export class AddItemFormComponent implements OnInit {
     var itemId = this.addItemForm.value.itemId;
     var itemName = this.addItemForm.value.itemName;
     var category = this.addItemForm.value.category;
-    var description = this.addItemForm.value.description;
-    this.itemService.addItem(new Item(itemId, itemName, category, description));
+    var itemDescription = this.addItemForm.value.description;
+    //this.itemService.addItem(new Item(itemId, itemName, category, itemDescription));
   }
 
 }

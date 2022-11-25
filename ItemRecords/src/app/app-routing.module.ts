@@ -5,13 +5,15 @@ import {AddItemFormComponent} from "./items/add-item-form/add-item-form.componen
 import {HomePageComponent} from "./home-page/home-page.component";
 import {ShopComponent} from "./shop/shop.component";
 import {UserLoginComponent} from "./user/user-login/user-login.component";
+import {AddUserFormComponent} from "./user/add-user-form/add-user-form.component";
 
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'items', component: ItemListComponent},
   {path: 'item/add', component: AddItemFormComponent},
   {path: 'shop', component: ShopComponent},
-  {path: 'login', component: UserLoginComponent}
+  {path: 'login', component: UserLoginComponent},
+  {path: 'register', component: AddUserFormComponent}
 ]
 
 @NgModule({
