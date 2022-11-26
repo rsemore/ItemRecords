@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
-    AppUser findByUserId(Long userId);
-
     AppUser findByUsername(String username);
 
     AppUser findTopByOrderByUserIdDesc();

@@ -24,7 +24,7 @@ public class ItemOfferController {
         List<ItemOffer> offers = itemOfferRepository.findAll();
         for (ItemOffer offer : offers) {
             offer.getItem().setItemOffer(null);
-            offer.getItem().setUserId(null);
+            offer.getItem().setUser(null);
         }
         return ResponseEntity.ok(offers);
     }

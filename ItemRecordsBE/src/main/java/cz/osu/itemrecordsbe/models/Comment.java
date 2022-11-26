@@ -15,7 +15,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
-    private AppUser userId;
+    private AppUser user;
 
     private String author;
     private String content;
