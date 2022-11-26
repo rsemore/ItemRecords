@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Item} from "../item";
 import {ItemService} from "../item.service";
 import {ToastrService} from "ngx-toastr";
+import {AuthenticationService} from "../../user/login/authentication/authentication.service";
 
 @Component({
   selector: 'app-item-list',
@@ -14,10 +15,14 @@ export class ItemListComponent implements OnInit {
 
   public displayedColumns: string[] = [/*'itemId', */'itemName', 'category', 'itemDescription'];
 
-  constructor(private itemService: ItemService, private toastr: ToastrService) { }
+  constructor(
+    private itemService: ItemService,
+    private toastr: ToastrService,
+    private authService: AuthenticationService
+  ) { }
 
   ngOnInit(): void {
-    this.itemService.getAll()
+    this.itemService.getAllByUserId(this.authService.getLoggedInUsername())
       .subscribe({
         next: data => {
           this.items = data;

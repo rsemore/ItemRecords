@@ -1,24 +1,26 @@
 import {Injectable} from '@angular/core';
 import {Item} from "./item";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-
-const apiUrl = "http://localhost:8080/api/items"
+import {User} from "../user/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
+  private apiUrl = "http://localhost:8080/api/items/"
+
   constructor(private http: HttpClient) {
   }
 
-  getAll(): Observable<Item[]> {
-    return this.http.get<Item[]>(apiUrl + "/all");
+  getAllByUserId(username: String) {
+    return this.http.get<Item[]>(this.apiUrl + "all/" + username);
   }
 
-  /*addItem(item: Item) {
-    this.items.push(item);
-  }*/
+  // TODO - item add
+  addItem(item: Item, user: User) {
+    console.log(item + "; " + user);
+    return this.http.post<String>(this.apiUrl + "add", [item, user]);
+  }
 
 }

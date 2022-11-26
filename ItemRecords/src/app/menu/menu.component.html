@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+  <span class="title">Sběratel</span>
+  <a mat-button *ngIf="isLoggedIn" routerLink="/items" class="nav-button">Moje předměty</a>
+  <a mat-button routerLink="/shop" class="nav-button">Prodeje</a>
+  <span class="flexExpand"></span>
+  <a mat-button *ngIf="!isLoggedIn" routerLink="/login" class="nav-button">Přihlásit se</a>
+  <span *ngIf="isLoggedIn" class="nav-button">Uživatel: {{username}}</span>
+  <a mat-button *ngIf="isLoggedIn" routerLink="/logout" class="nav-button" (click)=handleLogout()>Odhlásit se</a>
+</mat-toolbar>

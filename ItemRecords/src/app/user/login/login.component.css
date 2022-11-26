@@ -23,7 +23,6 @@ button:hover {
   background-color: #4a2688;
 }
 
-
 h2 {
   text-decoration: none;
   font-family: 'Berkshire Swash', cursive;
@@ -31,4 +30,9 @@ h2 {
   margin-left: 10px;
   padding-right: 10px;
   transition: 0.3s;
+}
+
+.card-success {
+  background-color: #7ff67f;
+  color: #286528;
 }

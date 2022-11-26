@@ -1,6 +1,9 @@
 <div class="grid-container">
-  <mat-grid-list cols="2" gutterSize="20px">
+
+  <mat-grid-list cols="3" gutterSize="20px">
+
     <mat-grid-tile *ngFor="let offer of offers">
+
       <mat-card>
         <mat-card-header>
           <mat-card-title>{{offer.price}} Kč</mat-card-title>
@@ -13,6 +16,9 @@
           <button mat-button>Zobrazit</button>
         </mat-card-actions>
       </mat-card>
+
     </mat-grid-tile>
+
   </mat-grid-list>
+
 </div>

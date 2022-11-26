@@ -16,12 +16,13 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {ShopComponent} from './shop/shop.component';
-import {UserLoginComponent} from './user/user-login/user-login.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {AddUserFormComponent} from './user/add-user-form/add-user-form.component';
 import {ToastrModule} from "ngx-toastr";
 import {HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {LoginComponent} from './user/login/login.component';
+import {MenuComponent} from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -30,27 +31,28 @@ import {MatGridListModule} from "@angular/material/grid-list";
     ItemListComponent,
     HomePageComponent,
     ShopComponent,
-    UserLoginComponent,
     AddUserFormComponent,
+    LoginComponent,
+    MenuComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatTableModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatSidenavModule,
-        HttpClientModule,
-        FormsModule,
-        ToastrModule.forRoot(),
-        MatGridListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSidenavModule,
+    HttpClientModule,
+    FormsModule,
+    ToastrModule.forRoot(),
+    MatGridListModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

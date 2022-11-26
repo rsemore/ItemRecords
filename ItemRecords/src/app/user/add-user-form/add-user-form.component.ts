@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
-import {UserService} from "../user.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {RegistrationService} from "./registration/registration.service";
 
 @Component({
   selector: 'app-add-user-form',
@@ -11,7 +11,11 @@ import {Router} from "@angular/router";
 })
 export class AddUserFormComponent implements OnInit {
 
-  constructor(private userService: UserService, private toastr: ToastrService, private router: Router) {
+  constructor(
+    private registrationService: RegistrationService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
   }
 
   addUserForm: FormGroup = new FormGroup({
@@ -28,23 +32,21 @@ export class AddUserFormComponent implements OnInit {
     let email = this.addUserForm.value.email;
     let password = this.addUserForm.value.password;
 
-    this.userService.addUser({
+    this.registrationService.addUser({
       username: username,
       email: email,
       password: password
     })
-      .subscribe(
-        {
-          next: () => {
-            this.toastr.success("User added");
-            this.router.navigate(["/login"])
-          },
-          error: err => {
-            this.toastr.error("An error occured while adding user!");
-            console.log("Error adding user: " + err.message);
-          }
+      .subscribe({
+        next: () => {
+          this.toastr.success("Registrace byla úspěšná")
+          this.router.navigate(["/login"])
+        },
+        error: err => {
+          this.toastr.error("Během registrace došlo k chybě")
+          console.log("Error adding user: " + err.message);
         }
-      );
+      });
   }
 
 }
