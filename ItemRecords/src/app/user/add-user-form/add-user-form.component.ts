@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {UserService} from "../user.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-user-form',
@@ -10,7 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AddUserFormComponent implements OnInit {
 
-  constructor(private userService: UserService, private toastr: ToastrService) {
+  constructor(private userService: UserService, private toastr: ToastrService, private router: Router) {
   }
 
   addUserForm: FormGroup = new FormGroup({
@@ -23,17 +24,24 @@ export class AddUserFormComponent implements OnInit {
   }
 
   addUser() {
+    let username = this.addUserForm.value.username;
+    let email = this.addUserForm.value.email;
+    let password = this.addUserForm.value.password;
+
     this.userService.addUser({
-      username: this.addUserForm.value.username,
-      email: this.addUserForm.value.email,
-      password: this.addUserForm.value.password
+      username: username,
+      email: email,
+      password: password
     })
       .subscribe(
         {
-          next: () => this.toastr.success("User added"),
+          next: () => {
+            this.toastr.success("User added");
+            this.router.navigate(["/login"])
+          },
           error: err => {
-            this.toastr.error("An error occured while adding user!")
-            console.log("Error adding user! " + err.message);
+            this.toastr.error("An error occured while adding user!");
+            console.log("Error adding user: " + err.message);
           }
         }
       );

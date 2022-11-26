@@ -7,15 +7,16 @@ import {User} from "./user";
 })
 export class UserService {
 
-  //private headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
   constructor(private http : HttpClient) {
   }
 
-  private apiUrl : String = "http://localhost:8080/";
-
+  private apiUrl : String = "http://localhost:8080/api/users/";
 
   addUser(user: User) {
-    return this.http.post<String>(this.apiUrl + "api/users/add", user);
-    //return this.http.post<String>(this.apiUrl + "api/users/add", {username: "Bob", email: "bob@bob.cz", password: "heslo"});
+    return this.http.post<String>(this.apiUrl + "add", user);
+  }
+
+  loginUser(user: User) {
+    return this.http.post<String>(this.apiUrl + "login", user);
   }
 }
