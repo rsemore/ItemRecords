@@ -3,6 +3,7 @@ import {Item} from "../item";
 import {ItemService} from "../item.service";
 import {ToastrService} from "ngx-toastr";
 import {AuthenticationService} from "../../user/login/authentication/authentication.service";
+import {AddItemFormComponent} from "../add-item-form/add-item-form.component";
 
 @Component({
   selector: 'app-item-list',
@@ -13,7 +14,7 @@ export class ItemListComponent implements OnInit {
 
   items: Item[] = [];
 
-  public displayedColumns: string[] = [/*'itemId', */'itemName', 'category', 'itemDescription'];
+  public displayedColumns: string[] = ['itemId', 'itemName', 'category', 'itemDescription', 'actions'];
 
   constructor(
     private itemService: ItemService,
@@ -26,13 +27,31 @@ export class ItemListComponent implements OnInit {
       .subscribe({
         next: data => {
           this.items = data;
-          //this.toastr.success("Items successfully loaded!")
+          console.log(this.items)
         },
         error: err => {
+          this.toastr.error("Chyba při načítání dat!")
           console.log("Error loading items! " + err)
-          this.toastr.error("Error loading items!")
         }
       })
+  }
+
+  deleteItem(itemId: number) {
+    this.itemService.deleteItem(itemId)
+      .subscribe({
+        next: () => {
+          this.toastr.success("Předmět úspěšně smazán")
+          setTimeout(() => {location.reload()}, 1500);
+        },
+        error: err => {
+          this.toastr.error("Chyba při mazání předmětu")
+          console.log("Error deleting item: " + err.message)
+        }
+      })
+  }
+
+  editItem(itemId: number) {
+
   }
 
 }

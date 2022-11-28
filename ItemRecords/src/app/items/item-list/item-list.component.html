@@ -13,6 +13,10 @@
 
   <mat-sidenav-content>
     <table mat-table [dataSource]="items">
+      <ng-container matColumnDef="itemId">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let item">{{item.itemId}}</td>
+      </ng-container>
       <ng-container matColumnDef="itemName">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let item">{{item.itemName}}</td>
@@ -24,6 +28,13 @@
       <ng-container matColumnDef="itemDescription">
         <th mat-header-cell *matHeaderCellDef>Description</th>
         <td mat-cell *matCellDef="let item">{{item.itemDescription}}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cel *matCellDef="let item">
+          <button mat-flat-button color="warn" (click)="deleteItem(item.itemId)" class="action-button">Smazat</button>
+          <button mat-flat-button color="accent" routerLink="/item/edit/{{item.itemId}}" class="action-button">Upravit</button>
+        </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -20,7 +20,6 @@ export class AddItemFormComponent implements OnInit {
   }
 
   addItemForm: FormGroup = new FormGroup({
-    itemId: new FormControl(1, Validators.required),
     itemName: new FormControl("", Validators.required),
     category: new FormControl(Category.OTHER, Validators.required),
     itemDescription: new FormControl("")
@@ -29,21 +28,18 @@ export class AddItemFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // TODO - item add
   addItem() {
-    let itemName = this.addItemForm.value.itemName;
-    let category = this.addItemForm.value.category;
-    let itemDescription = this.addItemForm.value.itemDescription;
+    let itemName = this.addItemForm.value.itemName
+    let category = this.addItemForm.value.category
+    let itemDescription = this.addItemForm.value.itemDescription
+    let userId = this.authService.getLoggedInUserData().userId
 
     this.itemService.addItem({
-      itemName: itemName,
-      category: category,
-      itemDescription: itemDescription
-    }, {
-      username: this.authService.getLoggedInUsername(),
-      password: "",
-      email: ""
-    })
+        itemName: itemName,
+        category: category,
+        itemDescription: itemDescription
+      }, userId
+    )
       .subscribe({
         next: () => {
           this.toastr.success("Předmět přidán")

@@ -41,3 +41,13 @@ table {
 .mat-flat-button:hover {
   background-color: #4a2688;
 }
+
+.action-button {
+  margin: 0;
+  transition: 0.3s;
+}
+
+.action-button:hover {
+  background-color: #777777;
+  color: white;
+}

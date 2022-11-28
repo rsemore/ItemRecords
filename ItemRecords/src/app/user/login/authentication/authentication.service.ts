@@ -10,11 +10,14 @@ import {Router} from "@angular/router";
 export class AuthenticationService {
 
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
+  USER_SESSION_ATTRIBUTE_NAME = 'authUserData'
 
   private apiUrl: String = "http://localhost:8080/api/users/"
 
-  username: String | undefined;
-  password: String | undefined;
+  username: String | undefined
+  password: String | undefined
+
+  user: User | undefined
 
   constructor(
     private http: HttpClient,
@@ -22,8 +25,8 @@ export class AuthenticationService {
   ) {
   }
 
-  loginUser(user: User) {
-    return this.http.post<String>(this.apiUrl + "login", user);
+  loginUser(username: String, password: String) {
+    return this.http.post(this.apiUrl + "login", {username: username, password: password})
   }
 
   registerSuccessfulLogin(username: String) {
@@ -31,23 +34,33 @@ export class AuthenticationService {
   }
 
   logout() {
-    sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
-    this.username = "";
-    this.password = "";
-    location.reload();
+    sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
+    sessionStorage.removeItem(this.USER_SESSION_ATTRIBUTE_NAME)
+    this.username = ""
+    this.password = ""
     this.router.navigate(["/login"])
   }
 
   isUserLoggedIn() {
-    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
-    if (user === null) return false;
-    return true;
+    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
+    if (user === null) return false
+    return true
   }
 
   getLoggedInUsername() {
-    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
-    if (user === null) return "";
-    return user;
+    let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
+    if (user === null) return ""
+    return user
+  }
+
+  setLoggedInUserData(user: any) {
+    sessionStorage.setItem(this.USER_SESSION_ATTRIBUTE_NAME, JSON.stringify(user))
+  }
+
+  getLoggedInUserData() {
+    let user = JSON.parse(sessionStorage.getItem(this.USER_SESSION_ATTRIBUTE_NAME)!)
+    if (user === null) return {}
+    return user
   }
 
 }

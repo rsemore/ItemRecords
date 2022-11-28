@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Item} from "./item";
 import {HttpClient} from "@angular/common/http";
-import {User} from "../user/user";
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +13,19 @@ export class ItemService {
   }
 
   getAllByUserId(username: String) {
-    return this.http.get<Item[]>(this.apiUrl + "all/" + username);
+    return this.http.get<Item[]>(this.apiUrl + "all/" + username)
   }
 
-  // TODO - item add
-  addItem(item: Item, user: User) {
-    console.log(item + "; " + user);
-    return this.http.post<String>(this.apiUrl + "add", [item, user]);
+  addItem(item: Item, userId: number) {
+    return this.http.post<String>(this.apiUrl + "add/" + userId, item)
+  }
+
+  deleteItem(itemId: number) {
+    return this.http.delete(this.apiUrl + "delete/" + itemId, {responseType: 'text'})
+  }
+
+  editItem(item: Item, itemId: number) {
+    return this.http.put(this.apiUrl + "edit/" + itemId, item)
   }
 
 }

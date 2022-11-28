@@ -28,9 +28,9 @@ export class AddUserFormComponent implements OnInit {
   }
 
   addUser() {
-    let username = this.addUserForm.value.username;
-    let email = this.addUserForm.value.email;
-    let password = this.addUserForm.value.password;
+    let username = this.addUserForm.value.username
+    let email = this.addUserForm.value.email
+    let password = this.addUserForm.value.password
 
     this.registrationService.addUser({
       username: username,

@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'register', component: AddUserFormComponent},
   {path: 'items', component: ItemListComponent},
   {path: 'item/add', component: AddItemFormComponent},
+  {path: 'item/edit/:itemId', component: AddItemFormComponent},
   {path: 'shop', component: ShopComponent}
 ]
 

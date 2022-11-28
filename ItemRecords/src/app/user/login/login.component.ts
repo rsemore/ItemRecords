@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "./authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
+import {User} from "../user";
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,11 @@ import {ToastrService} from "ngx-toastr";
 })
 export class LoginComponent implements OnInit {
 
-  username: String | undefined;
-  password: String | undefined;
+  username: String | undefined
+  password: String | undefined
 
-  isLoggedIn = false;
+  loggedUser: any = {}
+  isLoggedIn = false
 
   constructor(
     private router: Router,
@@ -23,27 +25,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isUserLoggedIn();
+    this.isLoggedIn = this.authService.isUserLoggedIn()
+    this.loggedUser = this.authService.getLoggedInUserData()
   }
 
   handleLogin() {
-    let username = this.username
-    let password = this.password
+    let username = this.username!.toString()
+    let password = this.password!.toString()
 
-    if(username == null || password == null)
+    if (username == null || password == null)
       this.toastr.warning("Vyplňte přihlašovací údaje")
 
-    this.authService.loginUser({
-      username: username!.toString(),
-      password: password!.toString(),
-      email: ""
-    })
+    this.authService.loginUser(username, password)
       .subscribe({
-        next: () => {
+        next: response => {
           this.authService.registerSuccessfulLogin(username!.toString())
+          this.authService.setLoggedInUserData(response)
+          console.log(response)
           this.toastr.success("Přihlášení bylo úspěšné")
-          this.router.navigate([""])
-          window.location.reload();
+          this.router.navigate(["/login"])
+          setTimeout(() => {location.reload()}, 1000);
         },
         error: err => {
           this.toastr.warning("Nesprávné přihlašovací údaje");

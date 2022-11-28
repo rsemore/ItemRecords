@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../user/login/authentication/authentication.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-menu',
@@ -14,7 +15,8 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -23,6 +25,8 @@ export class MenuComponent implements OnInit {
   }
 
   handleLogout() {
+    this.toastr.info("Odhlašování...")
+    setTimeout(() => {location.reload()}, 1000);
     this.authService.logout();
   }
 
