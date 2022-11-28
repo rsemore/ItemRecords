@@ -34,26 +34,18 @@ public class AppUserController {
         if (appUserRepository.existsByUsername(user.getUsername()))
             return new ResponseEntity<>("Username already taken", HttpStatus.BAD_REQUEST);
         else {
-            Long lastId = appUserRepository.findTopByOrderByUserIdDesc().getUserId();
-            lastId++;
+            Long lastId;
+            if (appUserRepository.findAll().isEmpty())
+                lastId = 1L;
+            else {
+                lastId = appUserRepository.findTopByOrderByUserIdDesc().getUserId();
+                lastId++;
+            }
             user.setUserId(lastId);
             appUserRepository.save(user);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
-
-    /*
-    @GetMapping("all")
-    ResponseEntity<List<AppUser>> getAll() {
-        return ResponseEntity.ok(appUserRepository.findAll());
-    }
-
-    @GetMapping(path = "{userId}")
-    ResponseEntity<AppUser> getUser(@PathVariable("userId") Long userId) {
-        AppUser appUser = appUserRepository.findByUserId(userId);
-        return new ResponseEntity<>(appUser, HttpStatus.OK);
-    }*/
-
 
 
 }

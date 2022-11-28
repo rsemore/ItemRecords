@@ -41,10 +41,18 @@ public class Item {
     public boolean isItemEmpty(Item item) {
         if (item.getItemName() == null || item.getItemName().equals(""))
             return true;
-        if (item.getManufacturer() == null || item.getManufacturer().equals(""))
+        /*if (item.getManufacturer() == null || item.getManufacturer().equals(""))
             return true;
         if (item.getYearOfManufacture() <= 0)
-            return true;
+            return true;*/
         return false;
+    }
+
+    public void update(Item newItem) {
+        setItemName(newItem.getItemName());
+        setManufacturer(newItem.getManufacturer());
+        setYearOfManufacture(newItem.getYearOfManufacture());
+        setCategory(newItem.getCategory());
+        setItemDescription(newItem.getItemDescription());
     }
 }
