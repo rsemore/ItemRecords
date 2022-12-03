@@ -51,6 +51,13 @@ public class ItemController {
         return ResponseEntity.ok(ret);
     }
 
+    @GetMapping("get/{itemId}")
+    ResponseEntity<Item> getItemById(@PathVariable("itemId") Long itemId) {
+        Item item = itemRepository.findByItemId(itemId);
+        item.setUser(null);
+        return ResponseEntity.ok(item);
+    }
+
     @PostMapping(value = "add/{userId}")
     ResponseEntity<String> addItem(@RequestBody Item item, @PathVariable("userId") Long userId) {
         if (item.isItemEmpty(item))
@@ -71,27 +78,31 @@ public class ItemController {
         }
     }
 
+    @PutMapping(value = "edit/{itemId}")
+    ResponseEntity<String> updateItem(@RequestBody Item newItem, @PathVariable("itemId") Long itemId) {
+        if (!itemRepository.existsById(itemId)) {
+            System.out.println("ITEM ID NOT FOUND");
+            return new ResponseEntity<>("Item not found", HttpStatus.BAD_REQUEST);
+        } else {
+            System.out.println("GOT ITEM");
+            Item item = itemRepository.findByItemId(itemId);
+            item.update(newItem);
+            System.out.println("UPDATED ITEM");
+            itemRepository.save(item);
+            System.out.println("SAVED ITEM");
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+    }
+
     @DeleteMapping(value = "delete/{itemId}")
     ResponseEntity<String> deleteItem(@PathVariable("itemId") Long itemId) {
-        if(!itemRepository.existsById(itemId))
+        if (!itemRepository.existsById(itemId))
             return new ResponseEntity<>("Item not found", HttpStatus.BAD_REQUEST);
         else {
             Item item = itemRepository.findByItemId(itemId);
             item.setUser(null);
             itemRepository.delete(item);
             return new ResponseEntity<>("Item deleted", HttpStatus.OK);
-        }
-    }
-
-    @PutMapping(value = "edit/{itemId}")
-    ResponseEntity<String> updateItem(@RequestBody Item newItem, @PathVariable("itemId") Long itemId) {
-        if (!itemRepository.existsById(itemId))
-            return new ResponseEntity<>("Item not found", HttpStatus.BAD_REQUEST);
-        else {
-            Item item = itemRepository.findByItemId(itemId);
-            item.update(newItem);
-            itemRepository.save(item);
-            return new ResponseEntity<>("Item updated", HttpStatus.OK);
         }
     }
 
