@@ -1,7 +1,5 @@
 <h2 mat-dialog-title>Prodat "{{item.itemName}}"</h2>
-<div mat-dialog-content >
-
-  <div></div>
+<div mat-dialog-content>
 
   <form [formGroup]="sellItemForm" (ngSubmit)="sellItem()" class="form">
 
@@ -26,7 +24,7 @@
     </mat-form-field>
 
     <div>
-      <button mat-raised-button color="primary" type="submit" class="form-element" mat-dialog-close>Uložit úpravy</button>
+      <button mat-raised-button color="primary" type="submit" class="form-element" mat-dialog-close>Dát na prodej</button>
       <button mat-raised-button color="warn" class="form-element" mat-dialog-close>Zrušit</button>
     </div>
 

@@ -21,7 +21,9 @@ export class AddUserFormComponent implements OnInit {
   addUserForm: FormGroup = new FormGroup({
     username: new FormControl("", Validators.required),
     email: new FormControl("", [Validators.email, Validators.required]),
-    password: new FormControl("", Validators.required)
+    password: new FormControl("", Validators.required),
+    firstName: new FormControl(""),
+    lastName: new FormControl("")
   });
 
   ngOnInit(): void {
@@ -31,11 +33,15 @@ export class AddUserFormComponent implements OnInit {
     let username = this.addUserForm.value.username
     let email = this.addUserForm.value.email
     let password = this.addUserForm.value.password
+    let firstName = this.addUserForm.value.firstName
+    let lastName = this.addUserForm.value.lastName
 
     this.registrationService.addUser({
       username: username,
       email: email,
-      password: password
+      password: password,
+      firstName: firstName,
+      lastName: lastName
     })
       .subscribe({
         next: () => {

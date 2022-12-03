@@ -7,7 +7,6 @@ mat-card {
 }
 
 .form-element {
-  padding: 5px 0px 5px 2px;
   width: 100%;
 }
 
@@ -29,7 +28,6 @@ h2 {
   font-size: 26px;
   margin-left: 10px;
   padding-right: 10px;
-  transition: 0.3s;
 }
 
 .card-success {

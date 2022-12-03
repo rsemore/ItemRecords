@@ -1,0 +1,56 @@
+<mat-card>
+  <div class="avatar">
+  </div>
+  <div class="name">
+    <h2 class="name-header">{{user.username}}</h2>
+    <h3>{{user.firstName}} {{user.lastName}}</h3>
+  </div>
+</mat-card>
+
+<mat-card style="display: block">
+
+  <h2>Komentáře</h2>
+
+  <div class="comment">
+    <div class="comment-avatar">
+    </div>
+    <div class="comment-body">
+      <p class="comment-header">Uživatel <b>autor komentáře</b> napsal komentář:</p>
+      <p>
+        comment content
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+        Nulla quis diam. Quisque porta. Fusce tellus odio, dapibus id f
+        ermentum quis, suscipit id erat. Quisque tincidunt scelerisque libero
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+        Nulla quis diam. Quisque porta. Fusce tellus odio, dapibus id f
+        ermentum quis, suscipit id erat. Quisque tincidunt scelerisque libero
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <h2 style="padding-top: 30px">Napsat komentář</h2>
+
+    <form [formGroup]="addCommentForm" (ngSubmit)="addComment()" class="form">
+
+      <mat-form-field class="form-element" appearance="outline">
+        <mat-label for="author">Autor</mat-label>
+        <input matInput type="text" id="author" formControlName="author">
+      </mat-form-field>
+
+      <mat-form-field class="form-element" appearance="outline">
+        <mat-label for="content">Komentář</mat-label>
+        <input matInput type="text" id="content" formControlName="content">
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button color="primary" type="submit" class="form-element" mat-dialog-close>Okomentovat</button>
+      </div>
+
+    </form>
+  </div>
+
+</mat-card>
+
+
+

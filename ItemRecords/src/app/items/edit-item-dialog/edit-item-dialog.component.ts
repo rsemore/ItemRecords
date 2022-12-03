@@ -24,7 +24,9 @@ export class EditItemDialogComponent implements OnInit {
   editItemForm: FormGroup = new FormGroup({
     itemName: new FormControl(this.data.itemName, Validators.required),
     category: new FormControl(this.data.category, Validators.required),
-    itemDescription: new FormControl(this.data.itemDescription)
+    itemDescription: new FormControl(this.data.itemDescription),
+    manufacturer: new FormControl(this.data.manufacturer),
+    yearOfManufacture: new FormControl(this.data.yearOfManufacture)
   })
 
   ngOnInit(): void {
@@ -35,12 +37,16 @@ export class EditItemDialogComponent implements OnInit {
     let itemName = this.editItemForm.value.itemName
     let category = this.editItemForm.value.category
     let itemDescription = this.editItemForm.value.itemDescription
+    let manufacturer = this.editItemForm.value.manufacturer
+    let yearOfManufacture = this.editItemForm.value.yearOfManufacture
     let itemId = this.data.itemId
 
     this.itemService.editItem({
         itemName: itemName,
         category: category,
-        itemDescription: itemDescription
+        itemDescription: itemDescription,
+        manufacturer: manufacturer,
+        yearOfManufacture: yearOfManufacture
       }, itemId
     ).subscribe({
       next: () => {

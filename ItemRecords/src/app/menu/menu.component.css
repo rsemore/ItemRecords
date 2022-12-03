@@ -26,7 +26,31 @@
   transition: 0.5s;
 }
 
+.nav-button-icon {
+  color: white;
+  padding: 7px;
+  margin-top: 8px;
+  transition: 0.5s;
+}
+
+.nav-button-icon:hover {
+  color: #210f42;
+}
+
 .nav-button:hover {
   background-color: #562f9c;
+}
+
+.nav-icon {
+  color: white;
+  margin-top: 7px;
+}
+
+.nav-icon:hover {
+  background-color: #562f9c;
+}
+
+mat-icon {
+  margin-top: -4px;
 }
 

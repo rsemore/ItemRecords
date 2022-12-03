@@ -1,11 +1,16 @@
 <mat-toolbar color="primary">
+
   <span class="title">Sběratel</span>
+
   <a mat-button *ngIf="isLoggedIn" routerLink="/items" class="nav-button">Moje předměty</a>
   <a mat-button routerLink="/shop" class="nav-button">Prodeje</a>
+
   <span class="flexExpand"></span>
+
   <a mat-button *ngIf="!isLoggedIn" routerLink="/login" class="nav-button">Přihlásit se</a>
-  <span *ngIf="isLoggedIn" class="nav-button">Uživatel: {{username}}</span>
-  <a mat-button *ngIf="isLoggedIn" class="nav-button" (click)=handleLogout()>
-    <mat-icon style="font-size: 22px">exit_to_app</mat-icon> Odhlásit se
-  </a>
+
+  <a mat-button *ngIf="isLoggedIn" routerLink="/user/{{userId}}" class="nav-button">{{username}}<mat-icon style="padding-left: 10px">account_circle</mat-icon></a>
+  <a *ngIf="isLoggedIn" class="nav-button-icon" style="padding-left: 0"><mat-icon>settings</mat-icon></a>
+  <a *ngIf="isLoggedIn" class="nav-button-icon" (click)=handleLogout()><mat-icon>exit_to_app</mat-icon></a>
+
 </mat-toolbar>

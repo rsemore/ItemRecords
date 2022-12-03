@@ -10,8 +10,9 @@ import {ToastrService} from "ngx-toastr";
 })
 export class MenuComponent implements OnInit {
 
-  isLoggedIn = false;
-  username: String | undefined;
+  isLoggedIn = false
+  username: String | undefined
+  userId: number | undefined
 
   constructor(
     private router: Router,
@@ -20,8 +21,9 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isUserLoggedIn();
-    this.username = this.authService.getLoggedInUsername();
+    this.isLoggedIn = this.authService.isUserLoggedIn()
+    this.username = this.authService.getLoggedInUsername()
+    this.userId = this.authService.getLoggedInUserData().userId
   }
 
   handleLogout() {
@@ -29,7 +31,7 @@ export class MenuComponent implements OnInit {
     setTimeout(() => {
       location.reload()
     }, 700);
-    this.authService.logout();
+    this.authService.logout()
   }
 
 }

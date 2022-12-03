@@ -27,6 +27,7 @@ import { EditItemDialogComponent } from './items/edit-item-dialog/edit-item-dial
 import { AddItemDialogComponent } from './items/add-item-dialog/add-item-dialog.component';
 import {MatIconModule} from "@angular/material/icon";
 import { SellItemDialogComponent } from './items/sell-item-dialog/sell-item-dialog.component';
+import { UserPageComponent } from './user/user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SellItemDialogComponent } from './items/sell-item-dialog/sell-item-dial
     EditItemDialogComponent,
     AddItemDialogComponent,
     SellItemDialogComponent,
+    UserPageComponent,
   ],
   imports: [
     BrowserModule,

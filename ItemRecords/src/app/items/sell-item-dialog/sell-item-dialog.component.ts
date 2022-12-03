@@ -25,7 +25,7 @@ export class SellItemDialogComponent implements OnInit {
 
   sellItemForm: FormGroup = new FormGroup({
     price: new FormControl(0, Validators.required),
-    description: new FormControl("", Validators.required),
+    description: new FormControl(""),
     startDate: new FormControl(0, Validators.required),
     endDate: new FormControl(0, Validators.required),
   })

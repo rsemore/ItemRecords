@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category} from "../category";
 import {ItemService} from "../item.service";
@@ -16,12 +16,15 @@ export class AddItemDialogComponent implements OnInit {
     private itemService: ItemService,
     private authService: AuthenticationService,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   addItemForm: FormGroup = new FormGroup({
     itemName: new FormControl("", Validators.required),
     category: new FormControl(Category.OTHER, Validators.required),
-    itemDescription: new FormControl("")
+    itemDescription: new FormControl(""),
+    manufacturer: new FormControl(""),
+    yearOfManufacture: new FormControl(null)
   })
 
   ngOnInit(): void {
@@ -31,12 +34,17 @@ export class AddItemDialogComponent implements OnInit {
     let itemName = this.addItemForm.value.itemName
     let category = this.addItemForm.value.category
     let itemDescription = this.addItemForm.value.itemDescription
+    let manufacturer = this.addItemForm.value.manufacturer
+    let yearOfManufacture = this.addItemForm.value.yearOfManufacture
+
     let userId = this.authService.getLoggedInUserData().userId
 
     this.itemService.addItem({
         itemName: itemName,
         category: category,
-        itemDescription: itemDescription
+        itemDescription: itemDescription,
+        manufacturer: manufacturer,
+        yearOfManufacture: yearOfManufacture
       }, userId
     )
       .subscribe({
