@@ -7,12 +7,12 @@
       Lorem ipsum dolor
     </div>
     <div>
-      <a mat-flat-button color="primary" routerLink="/item/add">Přidat předmět</a>
+      <a mat-flat-button color="primary" (click)="addItem()">Přidat předmět</a>
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <table mat-table [dataSource]="items">
+    <table mat-table [dataSource]="items" (contentChanged)="items">
       <ng-container matColumnDef="itemId">
         <th mat-header-cell *matHeaderCellDef>ID</th>
         <td mat-cell *matCellDef="let item">{{item.itemId}}</td>
@@ -32,8 +32,18 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cel *matCellDef="let item">
-          <button mat-flat-button color="warn" (click)="deleteItem(item.itemId)" class="action-button">Smazat</button>
-          <button mat-flat-button color="accent" routerLink="/item/edit/{{item.itemId}}" class="action-button">Upravit</button>
+          <button mat-icon-button class="icon-edit" (click)="editItem(item.itemId)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteItem(item.itemId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button class="icon-sell" (click)="sellItem(item.itemId)" *ngIf="!item.itemOffer">
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteItemOffer(item.itemOffer.offerId)" *ngIf="item.itemOffer">
+            <mat-icon>remove_shopping_cart</mat-icon>
+          </button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

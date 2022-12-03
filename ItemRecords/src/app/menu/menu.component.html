@@ -5,5 +5,7 @@
   <span class="flexExpand"></span>
   <a mat-button *ngIf="!isLoggedIn" routerLink="/login" class="nav-button">Přihlásit se</a>
   <span *ngIf="isLoggedIn" class="nav-button">Uživatel: {{username}}</span>
-  <a mat-button *ngIf="isLoggedIn" routerLink="/logout" class="nav-button" (click)=handleLogout()>Odhlásit se</a>
+  <a mat-button *ngIf="isLoggedIn" class="nav-button" (click)=handleLogout()>
+    <mat-icon style="font-size: 22px">exit_to_app</mat-icon> Odhlásit se
+  </a>
 </mat-toolbar>

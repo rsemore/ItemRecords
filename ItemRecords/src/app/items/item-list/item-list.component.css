@@ -42,12 +42,18 @@ table {
   background-color: #4a2688;
 }
 
-.action-button {
-  margin: 0;
-  transition: 0.3s;
+.icon-edit {
+  color: gray;
 }
 
-.action-button:hover {
-  background-color: #777777;
-  color: white;
+.mat-icon-button {
+  transition: 0.5s;
+}
+
+.mat-icon-button:hover {
+  background-color: #e0e0e0;
+}
+
+.icon-sell {
+  color: #0b9d0b;
 }

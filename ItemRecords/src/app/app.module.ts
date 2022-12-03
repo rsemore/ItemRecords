@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AddItemFormComponent} from './items/add-item-form/add-item-form.component';
 import {ItemListComponent} from './items/item-list/item-list.component';
 import {HomePageComponent} from './home-page/home-page.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -23,17 +22,24 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {LoginComponent} from './user/login/login.component';
 import {MenuComponent} from './menu/menu.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { EditItemDialogComponent } from './items/edit-item-dialog/edit-item-dialog.component';
+import { AddItemDialogComponent } from './items/add-item-dialog/add-item-dialog.component';
+import {MatIconModule} from "@angular/material/icon";
+import { SellItemDialogComponent } from './items/sell-item-dialog/sell-item-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddItemFormComponent,
     ItemListComponent,
     HomePageComponent,
     ShopComponent,
     AddUserFormComponent,
     LoginComponent,
     MenuComponent,
+    EditItemDialogComponent,
+    AddItemDialogComponent,
+    SellItemDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +57,9 @@ import {MenuComponent} from './menu/menu.component';
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot(),
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

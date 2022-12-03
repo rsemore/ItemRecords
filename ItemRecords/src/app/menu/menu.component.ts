@@ -26,7 +26,9 @@ export class MenuComponent implements OnInit {
 
   handleLogout() {
     this.toastr.info("Odhlašování...")
-    setTimeout(() => {location.reload()}, 1000);
+    setTimeout(() => {
+      location.reload()
+    }, 700);
     this.authService.logout();
   }
 

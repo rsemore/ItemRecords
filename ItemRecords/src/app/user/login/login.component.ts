@@ -11,8 +11,8 @@ import {User} from "../user";
 })
 export class LoginComponent implements OnInit {
 
-  username: String | undefined
-  password: String | undefined
+  username: String = ""
+  password: String = ""
 
   loggedUser: any = {}
   isLoggedIn = false
@@ -33,24 +33,30 @@ export class LoginComponent implements OnInit {
     let username = this.username!.toString()
     let password = this.password!.toString()
 
-    if (username == null || password == null)
+    if (username == "" || password == "")
       this.toastr.warning("Vyplňte přihlašovací údaje")
 
-    this.authService.loginUser(username, password)
-      .subscribe({
-        next: response => {
-          this.authService.registerSuccessfulLogin(username!.toString())
-          this.authService.setLoggedInUserData(response)
-          console.log(response)
-          this.toastr.success("Přihlášení bylo úspěšné")
-          this.router.navigate(["/login"])
-          setTimeout(() => {location.reload()}, 1000);
-        },
-        error: err => {
-          this.toastr.warning("Nesprávné přihlašovací údaje");
-          console.log(err.message);
-        }
-      })
+    else {
+      this.authService.loginUser(username, password)
+        .subscribe({
+          next: response => {
+            this.authService.registerSuccessfulLogin(username!.toString())
+            this.authService.setLoggedInUserData(response)
+            console.log(response)
+            this.toastr.success("Přihlášení bylo úspěšné")
+            this.router.navigate(["/login"])
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
+          },
+          error: err => {
+            this.toastr.warning("Nesprávné přihlašovací údaje");
+            console.log(err.message);
+          }
+        })
+    }
+
+
   }
 
 }
