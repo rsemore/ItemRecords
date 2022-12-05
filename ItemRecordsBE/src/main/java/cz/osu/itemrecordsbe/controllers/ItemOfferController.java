@@ -1,6 +1,5 @@
 package cz.osu.itemrecordsbe.controllers;
 
-import cz.osu.itemrecordsbe.models.AppUser;
 import cz.osu.itemrecordsbe.models.Item;
 import cz.osu.itemrecordsbe.models.ItemOffer;
 import cz.osu.itemrecordsbe.repositories.ItemOfferRepository;
@@ -28,9 +27,20 @@ public class ItemOfferController {
         List<ItemOffer> offers = itemOfferRepository.findAll();
         for (ItemOffer offer : offers) {
             offer.getItem().setItemOffer(null);
-            offer.getItem().setUser(null);
+            //offer.getItem().setUser(null);
+            offer.getItem().getUser().setComments(null);
+            offer.getItem().getUser().setItems(null);
         }
         return ResponseEntity.ok(offers);
+    }
+
+    @GetMapping(value="get/{offerId}")
+    ResponseEntity<ItemOffer> getCommentById(@PathVariable("offerId") Long offerId) {
+        ItemOffer offer = itemOfferRepository.findByOfferId(offerId);
+        offer.getItem().setItemOffer(null);
+        offer.getItem().getUser().setItems(null);
+        offer.getItem().getUser().setComments(null);
+        return ResponseEntity.ok(offer);
     }
 
     @PostMapping(value = "sell/{itemId}")
