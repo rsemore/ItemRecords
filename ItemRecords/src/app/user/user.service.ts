@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {User} from "./user";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http : HttpClient) {
-  }
+  private apiUrl = "http://localhost:8080/api/users/"
 
-  private apiUrl : String = "http://localhost:8080/api/users/";
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  addUser(user: User) {
-    return this.http.post<String>(this.apiUrl + "add", user);
-  }
-
-  loginUser(user: User) {
-    return this.http.post<String>(this.apiUrl + "login", user);
+  getUserById(userId: number) {
+    return this.http.get(this.apiUrl + "get/" + userId)
   }
 }

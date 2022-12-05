@@ -17,4 +17,8 @@ export class ItemOfferService {
     return this.http.get<ItemOffer[]>(apiUrl + "/all");
   }
 
+
+  getById(offerId: number) {
+    return this.http.get(apiUrl + "/get/" + offerId)
+  }
 }

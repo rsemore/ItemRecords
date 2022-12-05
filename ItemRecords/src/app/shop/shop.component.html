@@ -11,9 +11,10 @@
         <mat-card-content>
           <div>{{offer.description}}</div>
           <div>{{offer.item.itemName}}</div>
+          <div>{{offer.item.user.username}}</div>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>Zobrazit</button>
+          <button mat-button (click)="openOfferDialog(offer.offerId)">Zobrazit</button>
         </mat-card-actions>
       </mat-card>
 

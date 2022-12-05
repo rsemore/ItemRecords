@@ -36,6 +36,7 @@ h2 {
 
 .comment {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .comment-avatar {

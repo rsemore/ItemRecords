@@ -34,6 +34,7 @@ export class SellItemDialogComponent implements OnInit {
   }
 
   sellItem() {
+    let user = this.authService.getLoggedInUserData()
     let item = this.data
     let itemId = this.data.itemId
     let price = this.sellItemForm.value.price

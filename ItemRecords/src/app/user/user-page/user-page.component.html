@@ -11,19 +11,17 @@
 
   <h2>Komentáře</h2>
 
-  <div class="comment">
+  <div *ngIf="comments.length == 0">
+    <i>Nebyly nalezeny žádné komentáře</i>
+  </div>
+
+  <div class="comment" *ngFor="let comment of comments">
     <div class="comment-avatar">
     </div>
     <div class="comment-body">
-      <p class="comment-header">Uživatel <b>autor komentáře</b> napsal komentář:</p>
+      <p class="comment-header">Uživatel <b>{{comment.author}}</b> napsal komentář:</p>
       <p>
-        comment content
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-        Nulla quis diam. Quisque porta. Fusce tellus odio, dapibus id f
-        ermentum quis, suscipit id erat. Quisque tincidunt scelerisque libero
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-        Nulla quis diam. Quisque porta. Fusce tellus odio, dapibus id f
-        ermentum quis, suscipit id erat. Quisque tincidunt scelerisque libero
+        {{comment.content}}
       </p>
     </div>
   </div>
@@ -35,7 +33,7 @@
 
       <mat-form-field class="form-element" appearance="outline">
         <mat-label for="author">Autor</mat-label>
-        <input matInput type="text" id="author" formControlName="author">
+        <input matInput type="text" id="author" placeholder="Autor" formControlName="author">
       </mat-form-field>
 
       <mat-form-field class="form-element" appearance="outline">
@@ -44,7 +42,7 @@
       </mat-form-field>
 
       <div>
-        <button mat-raised-button color="primary" type="submit" class="form-element" mat-dialog-close>Okomentovat</button>
+        <button mat-raised-button color="primary" type="submit" class="form-element">Okomentovat</button>
       </div>
 
     </form>
