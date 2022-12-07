@@ -27,9 +27,9 @@ public class ItemOfferController {
         List<ItemOffer> offers = itemOfferRepository.findAll();
         for (ItemOffer offer : offers) {
             offer.getItem().setItemOffer(null);
-            //offer.getItem().setUser(null);
             offer.getItem().getUser().setComments(null);
             offer.getItem().getUser().setItems(null);
+            offer.getItem().getUser().setInterestGroups(null);
         }
         return ResponseEntity.ok(offers);
     }
@@ -40,6 +40,7 @@ public class ItemOfferController {
         offer.getItem().setItemOffer(null);
         offer.getItem().getUser().setItems(null);
         offer.getItem().getUser().setComments(null);
+        offer.getItem().getUser().setInterestGroups(null);
         return ResponseEntity.ok(offer);
     }
 

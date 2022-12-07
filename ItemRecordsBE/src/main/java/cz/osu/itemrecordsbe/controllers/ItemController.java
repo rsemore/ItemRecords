@@ -31,6 +31,7 @@ public class ItemController {
                 item.getItemOffer().setItem(null);
             item.getUser().setItems(null);
             item.getUser().setComments(null);
+            item.getUser().setInterestGroups(null);
         }
         return ResponseEntity.ok(items);
     }
@@ -45,6 +46,7 @@ public class ItemController {
                 item.getItemOffer().setItem(null);
             item.getUser().setItems(null);
             item.getUser().setComments(null);
+            item.getUser().setInterestGroups(null);
             if (item.getUser().getUserId().equals(retUser.getUserId()))
                 ret.add(item);
         }
@@ -84,12 +86,9 @@ public class ItemController {
             System.out.println("ITEM ID NOT FOUND");
             return new ResponseEntity<>("Item not found", HttpStatus.BAD_REQUEST);
         } else {
-            System.out.println("GOT ITEM");
             Item item = itemRepository.findByItemId(itemId);
             item.update(newItem);
-            System.out.println("UPDATED ITEM");
             itemRepository.save(item);
-            System.out.println("SAVED ITEM");
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }

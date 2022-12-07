@@ -22,7 +22,11 @@ public class AppUser {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Role> role;
+    @JoinTable(
+            name = "app_user_interests",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<InterestGroup> interestGroups;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Item> items;
@@ -47,5 +51,10 @@ public class AppUser {
         if (user.getEmail() == null || user.getEmail().equals(""))
             return true;
         return false;
+    }
+
+    public void addInterestGroup(InterestGroup interestGroup) {
+        this.interestGroups.add(interestGroup);
+        interestGroup.getAppUsers().add(this);
     }
 }

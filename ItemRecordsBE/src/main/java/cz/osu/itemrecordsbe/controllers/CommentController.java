@@ -41,6 +41,7 @@ public class CommentController {
         for (Comment comment: comments) {
             comment.getUser().setComments(null);
             comment.getUser().setItems(null);
+            comment.getUser().setInterestGroups(null);
             if (comment.getUser().getUserId().equals(retUser.getUserId()))
                 ret.add(comment);
         }
