@@ -10,7 +10,7 @@
   <a mat-button *ngIf="!isLoggedIn" routerLink="/login" class="nav-button">Přihlásit se</a>
 
   <a mat-button *ngIf="isLoggedIn" routerLink="/user/{{userId}}" class="nav-button">{{username}}<mat-icon style="padding-left: 10px">account_circle</mat-icon></a>
-  <a *ngIf="isLoggedIn" class="nav-button-icon" style="padding-left: 0"><mat-icon>settings</mat-icon></a>
+  <a *ngIf="isLoggedIn" class="nav-button-icon" (click)=openSettingsDialog() style="padding-left: 0"><mat-icon>settings</mat-icon></a>
   <a *ngIf="isLoggedIn" class="nav-button-icon" (click)=handleLogout()><mat-icon>exit_to_app</mat-icon></a>
 
 </mat-toolbar>

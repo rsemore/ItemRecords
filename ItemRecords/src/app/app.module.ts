@@ -29,6 +29,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { SellItemDialogComponent } from './items/sell-item-dialog/sell-item-dialog.component';
 import { UserPageComponent } from './user/user-page/user-page.component';
 import { ItemOfferDialogComponent } from './shop/item-offer-dialog/item-offer-dialog.component';
+import { SettingsDialogComponent } from './menu/settings-dialog/settings-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ItemOfferDialogComponent } from './shop/item-offer-dialog/item-offer-di
     SellItemDialogComponent,
     UserPageComponent,
     ItemOfferDialogComponent,
+    SettingsDialogComponent,
   ],
   imports: [
     BrowserModule,

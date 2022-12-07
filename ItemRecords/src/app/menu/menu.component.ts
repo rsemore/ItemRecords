@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../user/login/authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
+import {SellItemDialogComponent} from "../items/sell-item-dialog/sell-item-dialog.component";
+import {SettingsDialogComponent} from "./settings-dialog/settings-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +20,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +36,10 @@ export class MenuComponent implements OnInit {
       location.reload()
     }, 700);
     this.authService.logout()
+  }
+
+  openSettingsDialog() {
+    this.dialog.open(SettingsDialogComponent, {disableClose: true})
   }
 
 }
