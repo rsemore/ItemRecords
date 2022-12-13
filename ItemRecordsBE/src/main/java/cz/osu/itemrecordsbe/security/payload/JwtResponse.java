@@ -11,7 +11,8 @@ import java.util.List;
 public class JwtResponse {
 
     private String token;
-    private String type = "${application.jwt.token-prefix}";
+    @Value("${application.jwt.token-prefix}")
+    private String type;
     private Long id;
     private String username;
     private String email;
