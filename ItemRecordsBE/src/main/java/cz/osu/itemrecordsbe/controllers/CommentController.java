@@ -33,7 +33,9 @@ public class CommentController {
         return ResponseEntity.ok(comments);
     }
 
-    @GetMapping("all/{userId}")
+
+    // TODO - rewrite commentController methods + clean up + add CommentService
+    /*@GetMapping("all/{userId}")
     ResponseEntity<List<Comment>> getAllByUser(@PathVariable("userId") Long userId) {
         AppUser retUser = userRepository.findByUserId(userId);
         List<Comment> ret = new ArrayList<>();
@@ -46,15 +48,11 @@ public class CommentController {
                 ret.add(comment);
         }
         return ResponseEntity.ok(ret);
-    }
+    }*/
 
-    @PostMapping(value = "add/{userId}")
+    /*@PostMapping(value = "add/{userId}")
     ResponseEntity<String> addItem(@RequestBody Comment comment, @PathVariable("userId") Long userId) {
         // if is empty
-        /*
-        if (item.isItemEmpty(item))
-            return new ResponseEntity<>("Item is null", HttpStatus.BAD_REQUEST);
-         */
         Long lastId;
         if(commentRepository.findAll().isEmpty())
             lastId = 1L;
@@ -67,6 +65,6 @@ public class CommentController {
         comment.setUser(user);
         commentRepository.save(comment);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
+    }*/
 
 }

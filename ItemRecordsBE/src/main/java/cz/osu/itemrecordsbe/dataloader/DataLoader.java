@@ -25,12 +25,12 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         /*userRepository.save(new AppUser(1L, "Batman", "bruce@wayne.com", "Bruce", "Wayne", "batman123"));
         userRepository.save(new AppUser(2L, "SH", "sherlock@holmes.com", "Sherlock", "Holmes", "mysteries"));
-        userRepository.save(new AppUser(3L, "SteveJ", "steve@apple.com", "Steve", "Jobs", "Apple"));
+        userRepository.save(new AppUser(3L, "SteveJ", "steve@apple.com", "Steve", "Jobs", "Apple"));*/
         interestGroupRepository.save(new InterestGroup(1L, "Komiksy"));
         interestGroupRepository.save(new InterestGroup(2L, "Modely aut"));
         interestGroupRepository.save(new InterestGroup(3L, "Starožitnosti"));
         interestGroupRepository.save(new InterestGroup(4L, "Panenky"));
-        interestGroupRepository.save(new InterestGroup(5L, "Odznáčky"));*/
+        interestGroupRepository.save(new InterestGroup(5L, "Odznáčky"));
     }
 
 

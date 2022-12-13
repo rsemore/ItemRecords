@@ -22,6 +22,7 @@ public class ItemOfferController {
     @Autowired
     ItemRepository itemRepository;
 
+    // TODO - clean up + add ItemOfferService
     @GetMapping("all")
     ResponseEntity<List<ItemOffer>> getAll() {
         List<ItemOffer> offers = itemOfferRepository.findAll();
@@ -46,9 +47,6 @@ public class ItemOfferController {
 
     @PostMapping(value = "sell/{itemId}")
     ResponseEntity<String> sellItem(@RequestBody ItemOffer itemOffer, @PathVariable("itemId") Long itemId) {
-        /*if (itemOffer.isItemEmpty(item))
-            return new ResponseEntity<>("Item is null", HttpStatus.BAD_REQUEST);
-        else {*/
             Long lastId;
             if (itemOfferRepository.findAll().isEmpty())
                 lastId = 1L;

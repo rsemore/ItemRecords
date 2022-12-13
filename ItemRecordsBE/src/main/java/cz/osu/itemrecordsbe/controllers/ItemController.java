@@ -23,6 +23,7 @@ public class ItemController {
     @Autowired
     AppUserRepository userRepository;
 
+    // TODO - rewrite ItemController methods + clean up + add ItemService
     @GetMapping("all")
     ResponseEntity<List<Item>> getAll() {
         List<Item> items = itemRepository.findAll();
@@ -73,8 +74,8 @@ public class ItemController {
                 lastId++;
             }
             item.setItemId(lastId);
-            AppUser user = userRepository.findByUserId(userId);
-            item.setUser(user);
+            //AppUser user = userRepository.findByUserId(userId);
+            //item.setUser(user);
             itemRepository.save(item);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }

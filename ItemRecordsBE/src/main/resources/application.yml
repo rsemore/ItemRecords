@@ -8,7 +8,13 @@ spring:
   jpa:
     showSql: true
     hibernate:
-        ddlAuto: update
+      ddlAuto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  jwt:
+    secret-key: superdupersecuredkeyforthisawesomeapplication
+    token-prefix: "Bearer "
+    token-expiration-after-days: 10

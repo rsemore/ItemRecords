@@ -1,15 +1,20 @@
 package cz.osu.itemrecordsbe.models;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class AppUser {
+@AllArgsConstructor
+public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -17,8 +22,6 @@ public class AppUser {
 
     private String username;
     private String email;
-    private String firstName;
-    private String lastName;
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -34,27 +37,50 @@ public class AppUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Comment> comments;
 
-    public AppUser(Long userId, String username, String email, String firstName, String lastName, String password) {
-        this.userId = userId;
+    public AppUser(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.password = password;
-    }
 
-    public boolean isUserEmpty(AppUser user) {
-        if(user.getUsername() == null || user.getUsername().equals(""))
-            return true;
-        if (user.getPassword() == null || user.getPassword().equals(""))
-            return true;
-        if (user.getEmail() == null || user.getEmail().equals(""))
-            return true;
-        return false;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
     public void addInterestGroup(InterestGroup interestGroup) {
         this.interestGroups.add(interestGroup);
         interestGroup.getAppUsers().add(this);
+    }
+
+    // jwt and security stuff
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
     }
 }

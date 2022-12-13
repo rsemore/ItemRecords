@@ -22,6 +22,10 @@ public class Comment {
     private String author;
     private String content;
 
+    public AppUser getUser() {
+        return user;
+    }
+
     public Comment(Long commentId, String author, String content) {
         this.commentId = commentId;
         this.author = author;

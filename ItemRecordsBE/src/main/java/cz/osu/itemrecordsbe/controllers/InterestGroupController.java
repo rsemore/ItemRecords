@@ -32,13 +32,14 @@ public class InterestGroupController {
         return ResponseEntity.ok(groups);
     }
 
-    @PostMapping("{groupId}/user/{userId}")
+    // TODO - addUserToGroup + clean up + add InterestGroupService
+    /*@PostMapping("{groupId}/user/{userId}")
     ResponseEntity<String> addUserToGroup(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
         InterestGroup group = interestGroupRepository.findByGroupId(groupId);
         AppUser user = appUserRepository.findByUserId(userId);
         user.addInterestGroup(group);
         appUserRepository.save(user);
-        return ResponseEntity.ok("Interest group added to user");
-    }
+        return ResponseEntity.ok().build();
+    }*/
 
 }
