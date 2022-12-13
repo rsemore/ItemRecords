@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category} from "../category";
 import {ItemService} from "../item.service";
-import {AuthenticationService} from "../../user/login/authentication/authentication.service";
+import {AuthenticationService} from "../../user/authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -29,8 +29,11 @@ export class EditItemDialogComponent implements OnInit {
     yearOfManufacture: new FormControl(this.data.yearOfManufacture)
   })
 
+  itemName: string = ""
+
   ngOnInit(): void {
     console.log(this.data)
+    this.itemName = this.data.itemName
   }
 
   editItem() {

@@ -25,5 +25,15 @@ h2 {
   font-size: 26px;
   margin-left: 10px;
   padding-right: 10px;
+  float: left;
+}
+
+.icon-close {
+  float: right;
   transition: 0.3s;
+}
+
+.icon-close:hover{
+  color: #c22f25;
+  cursor: pointer;
 }

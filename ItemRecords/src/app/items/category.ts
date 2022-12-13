@@ -1,5 +1,5 @@
 export enum Category {
-  BOOK,
-  FIGURINE,
-  OTHER
+  BOOK="Kniha / komiks",
+  FIGURINE="Figurka",
+  OTHER="Ostatní"
 }

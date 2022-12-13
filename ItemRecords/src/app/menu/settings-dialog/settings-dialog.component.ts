@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../user/user.service";
 import {ToastrService} from "ngx-toastr";
-import {AuthenticationService} from "../../user/login/authentication/authentication.service";
+import {AuthenticationService} from "../../user/authentication/authentication.service";
+import {TokenStorageService} from "../../user/authentication/token-storage.service";
 
 @Component({
   selector: 'app-settings-dialog',
@@ -13,12 +14,15 @@ export class SettingsDialogComponent implements OnInit {
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
-    private authService: AuthenticationService
+    private tokenStorage: TokenStorageService
   ) { }
 
   groups: any;
+  user: any = this.tokenStorage.getUser()
 
   ngOnInit(): void {
+    console.log(this.user)
+
     this.userService.getAllInterestGroups()
       .subscribe({
         next: data => {
@@ -32,9 +36,8 @@ export class SettingsDialogComponent implements OnInit {
       })
   }
 
-  // TODO post gives error but user is added to group ????
   joinGroup(groupId: number) {
-    this.userService.joinGroup(groupId, this.authService.getLoggedInUserData().userId)
+    this.userService.joinGroup(groupId, this.user.userId)
       .subscribe({
         next: () => {
           this.toastr.success("Zájem přidán")

@@ -1,14 +1,23 @@
 <div class="grid-container">
 
-  <mat-grid-list cols="3" gutterSize="20px">
+  <mat-grid-list cols="3" rowHeight="2:1">
 
     <mat-grid-tile *ngFor="let offer of offers">
 
       <mat-card>
         <mat-card-header>
-          <mat-card-title>{{offer.price}} Kč</mat-card-title>
+          <mat-card-title>
+            <div>
+              {{offer.item.itemName}}
+            </div>
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
+
+          <div style="background-color: #d5d5d5; border-radius: 25px; padding: 5px">
+            {{offer.price}} Kč
+          </div>
+
           <div>{{offer.description}}</div>
           <div>{{offer.item.itemName}}</div>
           <div>{{offer.item.user.username}}</div>

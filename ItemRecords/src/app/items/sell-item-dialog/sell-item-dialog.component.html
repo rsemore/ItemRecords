@@ -1,16 +1,15 @@
-<h2 mat-dialog-title>Prodat "{{item.itemName}}"</h2>
-<div mat-dialog-content>
+<div mat-dialog-title style="display: inline">
+  <h2>Prodat "{{item.itemName}}"</h2>
+  <a mat-dialog-close class="icon-close"><mat-icon style="font-size: 26px">close</mat-icon></a>
+</div>
+
+<div mat-dialog-content style="clear: both">
 
   <form [formGroup]="sellItemForm" (ngSubmit)="sellItem()" class="form">
 
     <mat-form-field class="form-element" appearance="outline">
       <mat-label for="price">Cena</mat-label>
-      <input matInput type="number" id="price" formControlName="price">
-    </mat-form-field>
-
-    <mat-form-field class="form-element" appearance="outline">
-      <mat-label for="description">Popis</mat-label>
-      <input matInput type="text" id="description" formControlName="description">
+      <input matInput type="number" id="price" min="1" formControlName="price">
     </mat-form-field>
 
     <mat-form-field class="form-element" appearance="outline">
@@ -21,6 +20,11 @@
     <mat-form-field class="form-element" appearance="outline">
       <mat-label for="endDate">Konec prodeje</mat-label>
       <input matInput type="datetime-local" id="endDate" formControlName="endDate">
+    </mat-form-field>
+
+    <mat-form-field class="form-element" appearance="outline">
+      <mat-label for="description">Popis</mat-label>
+      <input matInput type="text" id="description" formControlName="description">
     </mat-form-field>
 
     <div>

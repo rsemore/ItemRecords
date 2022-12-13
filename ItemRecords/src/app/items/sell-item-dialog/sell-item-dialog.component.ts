@@ -2,9 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {ItemService} from "../item.service";
-import {AuthenticationService} from "../../user/login/authentication/authentication.service";
+import {AuthenticationService} from "../../user/authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
 import {Item} from "../item";
+import {TokenStorageService} from "../../user/authentication/token-storage.service";
 
 @Component({
   selector: 'app-sell-item-dialog',
@@ -16,7 +17,7 @@ export class SellItemDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private itemService: ItemService,
-    private authService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private toastr: ToastrService
   ) {
   }
@@ -24,17 +25,17 @@ export class SellItemDialogComponent implements OnInit {
   item: any = this.data
 
   sellItemForm: FormGroup = new FormGroup({
-    price: new FormControl(0, Validators.required),
-    description: new FormControl(""),
+    price: new FormControl(1, Validators.required),
     startDate: new FormControl(0, Validators.required),
     endDate: new FormControl(0, Validators.required),
+    description: new FormControl("")
   })
 
   ngOnInit(): void {
   }
 
   sellItem() {
-    let user = this.authService.getLoggedInUserData()
+    let user = this.tokenStorage.getUser()
     let item = this.data
     let itemId = this.data.itemId
     let price = this.sellItemForm.value.price

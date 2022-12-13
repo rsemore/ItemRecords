@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category} from "../category";
 import {ItemService} from "../item.service";
-import {AuthenticationService} from "../../user/login/authentication/authentication.service";
+import {AuthenticationService} from "../../user/authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
+import {TokenStorageService} from "../../user/authentication/token-storage.service";
 
 @Component({
   selector: 'app-add-item-dialog',
@@ -14,7 +15,7 @@ export class AddItemDialogComponent implements OnInit {
 
   constructor(
     private itemService: ItemService,
-    private authService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private toastr: ToastrService
   ) {
   }
@@ -37,8 +38,7 @@ export class AddItemDialogComponent implements OnInit {
     let manufacturer = this.addItemForm.value.manufacturer
     let yearOfManufacture = this.addItemForm.value.yearOfManufacture
 
-    let userId = this.authService.getLoggedInUserData().userId
-
+    let userId = this.tokenStorage.getUser().userId
     this.itemService.addItem({
         itemName: itemName,
         category: category,
@@ -50,6 +50,7 @@ export class AddItemDialogComponent implements OnInit {
       .subscribe({
         next: () => {
           this.toastr.success("Předmět přidán")
+          this.addItemForm.reset()
         },
         error: err => {
           this.toastr.error("Chyba při přidávání předmětu")

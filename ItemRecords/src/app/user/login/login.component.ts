@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {AuthenticationService} from "./authentication/authentication.service";
+import {AuthenticationService} from "../authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
-import {User} from "../user";
+import {TokenStorageService} from "../authentication/token-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -11,52 +10,48 @@ import {User} from "../user";
 })
 export class LoginComponent implements OnInit {
 
-  username: String = ""
-  password: String = ""
+  username = ""
+  password = ""
 
-  loggedUser: any = {}
   isLoggedIn = false
+  isLoginFailed = false
+  errorMessage = ""
+  loggedUser: any = {}
 
   constructor(
-    private router: Router,
     private authService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private toastr: ToastrService
   ) {
   }
 
-  ngOnInit(): void {
-    this.isLoggedIn = this.authService.isUserLoggedIn()
-    this.loggedUser = this.authService.getLoggedInUserData()
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true
+      this.loggedUser = this.tokenStorage.getUser()
+    }
   }
 
   handleLogin() {
-    let username = this.username!.toString()
-    let password = this.password!.toString()
+    let username = this.username
+    let password = this.password
 
-    if (username == "" || password == "")
-      this.toastr.warning("Vyplňte přihlašovací údaje")
+    this.authService.login(username, password).subscribe({
+      next: data => {
+        this.tokenStorage.saveToken(data.token)
+        this.tokenStorage.saveUser(data)
 
-    else {
-      this.authService.loginUser(username, password)
-        .subscribe({
-          next: response => {
-            this.authService.registerSuccessfulLogin(username!.toString())
-            this.authService.setLoggedInUserData(response)
-            console.log(response)
-            this.toastr.success("Přihlášení bylo úspěšné")
-            this.router.navigate(["/login"])
-            setTimeout(() => {
-              location.reload()
-            }, 1000);
-          },
-          error: err => {
-            this.toastr.warning("Nesprávné přihlašovací údaje");
-            console.log(err.message);
-          }
-        })
-    }
-
-
+        this.isLoginFailed = false
+        this.isLoggedIn = true
+        this.loggedUser = this.tokenStorage.getUser()
+        window.location.reload()
+      },
+      error: err => {
+        this.errorMessage = err.error.message
+        this.isLoginFailed = true
+        this.toastr.error("Chyba při přihlašování")
+      }
+    })
   }
 
 }

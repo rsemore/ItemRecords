@@ -2,12 +2,14 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Item} from "../item";
 import {ItemService} from "../item.service";
 import {ToastrService} from "ngx-toastr";
-import {AuthenticationService} from "../../user/login/authentication/authentication.service";
+import {AuthenticationService} from "../../user/authentication/authentication.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {EditItemDialogComponent} from "../edit-item-dialog/edit-item-dialog.component";
 import {AddItemDialogComponent} from "../add-item-dialog/add-item-dialog.component";
 import {SellItemDialogComponent} from "../sell-item-dialog/sell-item-dialog.component";
+import {Category} from "../category";
+import {TokenStorageService} from "../../user/authentication/token-storage.service";
 
 @Component({
   selector: 'app-item-list',
@@ -16,25 +18,42 @@ import {SellItemDialogComponent} from "../sell-item-dialog/sell-item-dialog.comp
 })
 export class ItemListComponent implements OnInit {
 
-  items: Item[] = [];
+  items: Item[] = []
   item: any | null = null
 
-  public displayedColumns: string[] = ['itemId', 'itemName', 'category', 'itemDescription', 'actions'];
+  filteredItems: Item[] = []
+  _filterText: string = ""
+
+  category = Category
+  enumKeys: string[] = []
+
+  get filterText() {
+    return this._filterText
+  }
+
+  set filterText(value: string) {
+    this._filterText = value
+    this.filteredItems = this.filterItemsByName(value)
+  }
+
+  public displayedColumns: string[] = [/*'itemId', */'itemName', 'category', 'itemDescription', 'actions'];
 
   constructor(
     private itemService: ItemService,
     private toastr: ToastrService,
-    private authService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private router: Router,
     private dialog: MatDialog
   ) {
+    this.enumKeys = Object.keys(this.category)
   }
 
   ngOnInit(): void {
-    this.itemService.getAllByUser(this.authService.getLoggedInUsername())
+    this.itemService.getAllByUser(this.tokenStorage.getUser().username)
       .subscribe({
         next: data => {
           this.items = data
+          this.filteredItems = this.items
           console.log(this.items)
         },
         error: err => {
@@ -42,6 +61,31 @@ export class ItemListComponent implements OnInit {
           console.log("Error loading items! " + err)
         }
       })
+  }
+
+  filterItemsByName(filterTerm: string) {
+    if (this.items.length == 0 || filterTerm == '')
+      return this.items
+    else {
+      return this.items.filter((item) => {
+        return item.itemName.toLowerCase().includes(filterTerm.toLowerCase())
+      })
+    }
+  }
+
+  selectedCategory: any
+
+  valueChanged() {
+    console.log("Filtering by category " + this.selectedCategory)
+    this.filteredItems = this.items.filter((item) => {
+      return item.category === this.selectedCategory
+    })
+  }
+
+  resetSearch() {
+    this.filteredItems = this.items
+    this.selectedCategory = null
+    this._filterText = ""
   }
 
   addItem() {

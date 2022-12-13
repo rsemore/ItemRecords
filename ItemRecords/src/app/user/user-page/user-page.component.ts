@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../login/authentication/authentication.service";
+import {AuthenticationService} from "../authentication/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../user.service";
 import {CommentService} from "./comment.service";
 import {ToastrService} from "ngx-toastr";
 import {UserComment} from "./user-comment";
-import {timeout} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {TokenStorageService} from "../authentication/token-storage.service";
 
 @Component({
   selector: 'app-user-page',
@@ -14,36 +15,29 @@ import {timeout} from "rxjs";
 })
 export class UserPageComponent implements OnInit {
 
-  comments: UserComment[] = [];
+  userId: number = 0
   user: any
+  comments: UserComment[] = [];
 
   constructor(
     private authService: AuthenticationService,
     private commentService: CommentService,
-    private userService: UserService,
-    private toastr: ToastrService
+    private tokenStorage: TokenStorageService,
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
   addCommentForm: FormGroup = new FormGroup({
-    author: new FormControl(this.authService.getLoggedInUsername(), Validators.required),
+    author: new FormControl({value: this.tokenStorage.getUser().username, disabled: true}, Validators.required),
     content: new FormControl("", Validators.required)
   })
 
   ngOnInit(): void {
-    this.user = this.authService.getLoggedInUserData()
-    // TODO - load user by id
-    this.commentService.getAllByUser(this.user.userId)
-      .subscribe({
-        next: data => {
-          this.comments = data
-          console.log(this.comments)
-        },
-        error: err => {
-          this.toastr.error("Chyba při načítání dat!")
-          console.log("Error loading items! " + err)
-        }
-      })
+    this.route.params.subscribe((params) => this.userId = params['userId'])
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false   // reload page on params change
+    this.getComments(this.userId)
   }
 
   addComment() {
@@ -66,14 +60,37 @@ export class UserPageComponent implements OnInit {
         },
         error: err => {
           this.toastr.error("Chyba při přidávání komentáře")
-          console.log("Error adding item: " + err.message)
+          console.log("Error adding comment: " + err.message)
         }
       });
   }
-
-  /*getUserData(userId: number) {
+/*
+  getUserData(userId: number) {
     this.userService.getUserById(userId)
-      .subscribe()
+      .subscribe({
+        next: data => {
+          this.user = data
+          console.log(this.user)
+        },
+        error: err => {
+          this.toastr.error("Chyba při načítání dat!")
+          console.log("Error getting user! " + err)
+        }
+      })
   }*/
+
+  getComments(userId: number) {
+    this.commentService.getAllByUser(userId)
+      .subscribe({
+        next: data => {
+          this.comments = data
+          console.log(this.comments)
+        },
+        error: err => {
+          this.toastr.error("Chyba při načítání dat!")
+          console.log("Error loading comments! " + err)
+        }
+      })
+  }
 
 }

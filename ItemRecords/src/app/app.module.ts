@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ItemListComponent} from './items/item-list/item-list.component';
-import {HomePageComponent} from './home-page/home-page.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTableModule} from "@angular/material/table";
@@ -35,7 +34,6 @@ import { SettingsDialogComponent } from './menu/settings-dialog/settings-dialog.
   declarations: [
     AppComponent,
     ItemListComponent,
-    HomePageComponent,
     ShopComponent,
     AddUserFormComponent,
     LoginComponent,

@@ -1,6 +1,11 @@
 <h2>Nastavení</h2>
 
 <div>
+  <h3>Základní informace</h3>
+  <div>Přezdívka: {{user.username}}</div>
+  <div>Jméno: {{user.firstName}}</div>
+  <div>Přijmení: {{user.lastName}}</div>
+
   <h3>Zájmy</h3>
   <div>Kliknutím na zájem si ho přidáte na profil</div>
   <div *ngFor="let group of groups">

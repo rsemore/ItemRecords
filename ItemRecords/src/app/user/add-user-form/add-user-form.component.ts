@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthenticationService} from "../authentication/authentication.service";
 import {Router} from "@angular/router";
-import {RegistrationService} from "./registration/registration.service";
 
 @Component({
   selector: 'app-add-user-form',
@@ -10,9 +10,12 @@ import {RegistrationService} from "./registration/registration.service";
   styleUrls: ['./add-user-form.component.css']
 })
 export class AddUserFormComponent implements OnInit {
+  isSuccessful = false
+  isSignUpFailed = false
+  errorMessage = ""
 
   constructor(
-    private registrationService: RegistrationService,
+    private authService: AuthenticationService,
     private toastr: ToastrService,
     private router: Router
   ) {
@@ -21,38 +24,32 @@ export class AddUserFormComponent implements OnInit {
   addUserForm: FormGroup = new FormGroup({
     username: new FormControl("", Validators.required),
     email: new FormControl("", [Validators.email, Validators.required]),
-    password: new FormControl("", Validators.required),
-    firstName: new FormControl(""),
-    lastName: new FormControl("")
+    password: new FormControl("", Validators.required)
   });
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
-  addUser() {
+  handleRegistration() {
     let username = this.addUserForm.value.username
     let email = this.addUserForm.value.email
     let password = this.addUserForm.value.password
-    let firstName = this.addUserForm.value.firstName
-    let lastName = this.addUserForm.value.lastName
 
-    this.registrationService.addUser({
-      username: username,
-      email: email,
-      password: password,
-      firstName: firstName,
-      lastName: lastName
+    this.authService.register(username, email, password).subscribe({
+      next: data => {
+        console.log(data)
+        this.isSuccessful = true
+        this.isSignUpFailed = false
+        this.toastr.success("Registrace byla úspěšná")
+        this.router.navigate(["/login"])
+      },
+      error: err => {
+        this.errorMessage = err.error.message
+        this.isSignUpFailed = true
+        this.toastr.error("Během registrace došlo k chybě")
+        console.log("Error registering user: " + err.message);
+      }
     })
-      .subscribe({
-        next: () => {
-          this.toastr.success("Registrace byla úspěšná")
-          this.router.navigate(["/login"])
-        },
-        error: err => {
-          this.toastr.error("Během registrace došlo k chybě")
-          console.log("Error adding user: " + err.message);
-        }
-      });
   }
 
 }

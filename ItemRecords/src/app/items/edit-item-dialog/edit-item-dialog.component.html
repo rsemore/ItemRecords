@@ -1,5 +1,9 @@
-<h2 mat-dialog-title>Upravit předmět</h2>
-<div mat-dialog-content >
+<div mat-dialog-title style="display: inline">
+  <h2>Upravit "{{itemName}}"</h2>
+  <a mat-dialog-close class="icon-close"><mat-icon style="font-size: 26px">close</mat-icon></a>
+</div>
+
+<div mat-dialog-content style="clear: both">
 
   <form [formGroup]="editItemForm" (ngSubmit)="editItem()" class="form">
 

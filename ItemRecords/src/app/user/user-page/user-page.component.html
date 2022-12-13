@@ -4,7 +4,11 @@
   <div class="name">
     <h2 class="name-header">{{user.username}}</h2>
     <h3>{{user.firstName}} {{user.lastName}}</h3>
+    <div style="display: flex">
+      <div class="interest" *ngFor="let interest of user.interestGroups">{{interest.groupName}}</div>
+    </div>
   </div>
+
 </mat-card>
 
 <mat-card style="display: block">

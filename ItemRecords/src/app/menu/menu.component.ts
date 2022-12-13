@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../user/login/authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
-import {SellItemDialogComponent} from "../items/sell-item-dialog/sell-item-dialog.component";
 import {SettingsDialogComponent} from "./settings-dialog/settings-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {TokenStorageService} from "../user/authentication/token-storage.service";
 
 @Component({
   selector: 'app-menu',
@@ -19,27 +18,33 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
+    private tokenStorage: TokenStorageService,
     private toastr: ToastrService,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isUserLoggedIn()
-    this.username = this.authService.getLoggedInUsername()
-    this.userId = this.authService.getLoggedInUserData().userId
+    if (this.tokenStorage.getToken() != null)
+      this.isLoggedIn = true
+    this.username = this.tokenStorage.getUser().username
+    this.userId = this.tokenStorage.getUser().userId
   }
 
   handleLogout() {
     this.toastr.info("Odhlašování...")
-    setTimeout(() => {
-      location.reload()
-    }, 700);
-    this.authService.logout()
+    setTimeout(() => location.reload(), 700);
+    this.tokenStorage.signOut()
+    this.isLoggedIn = false
+    this.router.navigate(["/login"])
   }
 
   openSettingsDialog() {
     this.dialog.open(SettingsDialogComponent, {disableClose: true})
+  }
+
+  openUserPage() {
+    this.router.navigate(['/user/', this.userId])
   }
 
 }
