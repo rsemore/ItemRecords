@@ -1,18 +1,29 @@
-<h2>Nastavení</h2>
+<div class="dialog">
+  <div mat-dialog-title style="display: inline">
+    <h2>Nastavení</h2>
+    <a mat-dialog-close class="icon-close" (click)="reloadPage()">
+      <mat-icon style="font-size: 26px">close</mat-icon>
+    </a>
+  </div>
 
-<div>
-  <h3>Základní informace</h3>
-  <div>Přezdívka: {{user.username}}</div>
-  <div>Jméno: {{user.firstName}}</div>
-  <div>Přijmení: {{user.lastName}}</div>
+  <div mat-dialog-content style="clear: both">
+    <h3>Základní informace</h3>
+    <div>Přezdívka: {{user.username}}</div>
 
-  <h3>Zájmy</h3>
-  <div>Kliknutím na zájem si ho přidáte na profil</div>
-  <div *ngFor="let group of groups">
-    <button mat-flat-button color="primary" (click)="joinGroup(group.groupId)">{{group.groupName}}</button>
+    <h3>Zájmy</h3>
+    <div>Kliknutím na zájem si ho přidáte na profil</div>
+    <div *ngFor="let group of groups" style="display: inline">
+      <button class="btn-interest" *ngIf="!checkIfAlreadyJoined(group.groupId)" (click)="joinGroup(group.groupId)">
+        <span>{{group.groupName}}</span>
+      </button>
+    </div>
+    <h3>Moje zájmy</h3>
+    <div>Kliknutím na zájem ho z profilu odstraníte</div>
+    <div *ngFor="let group of userData.interestGroups" style="display: inline">
+      <button class="btn-joined-interest" (click)="removeFromGroup(group.groupId)">
+        <span>{{group.groupName}}</span>
+      </button>
+    </div>
   </div>
 </div>
 
-<div>
-  <button mat-raised-button color="warn" class="form-element" mat-dialog-close>Zavřít</button>
-</div>

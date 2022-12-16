@@ -1,8 +1,30 @@
+<div>
+  <h3>Filtrování</h3>
+  <mat-form-field appearance="outline">
+    <mat-label>Název předmětu</mat-label>
+    <input matInput [(ngModel)]="filterText" type="text" placeholder="hledat...">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Kategorie</mat-label>
+    <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="valueChanged()">
+      <mat-option *ngFor="let category of enumKeys" [value]="category" >{{category}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <a mat-flat-button color="accent" (click)="resetSearch()">Vymazat filtry</a>
+
+</div>
+
 <div class="grid-container">
+
+  <div *ngIf="filteredOffers.length == 0">
+    <i>Nebyly nalezeny žádné nabídky</i>
+  </div>
 
   <mat-grid-list cols="3" rowHeight="2:1">
 
-    <mat-grid-tile *ngFor="let offer of offers">
+    <mat-grid-tile *ngFor="let offer of filteredOffers">
 
       <mat-card>
         <mat-card-header>

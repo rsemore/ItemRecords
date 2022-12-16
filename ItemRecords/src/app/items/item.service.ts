@@ -14,8 +14,8 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
-  getAllByUser(username: String) {
-    return this.http.get<Item[]>(this.apiUrl + "all/" + username)
+  getAllByUserId(userId: number) {
+    return this.http.get<Item[]>(this.apiUrl + "all/" + userId)
   }
 
   getById(itemId: number) {

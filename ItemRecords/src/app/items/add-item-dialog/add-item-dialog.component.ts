@@ -37,8 +37,8 @@ export class AddItemDialogComponent implements OnInit {
     let itemDescription = this.addItemForm.value.itemDescription
     let manufacturer = this.addItemForm.value.manufacturer
     let yearOfManufacture = this.addItemForm.value.yearOfManufacture
-
     let userId = this.tokenStorage.getUser().userId
+
     this.itemService.addItem({
         itemName: itemName,
         category: category,
@@ -60,7 +60,7 @@ export class AddItemDialogComponent implements OnInit {
   }
 
   reloadPage() {
-    location.reload()
+    window.location.reload()
   }
 
 }

@@ -15,7 +15,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {ShopComponent} from './shop/shop.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {AddUserFormComponent} from './user/add-user-form/add-user-form.component';
+import {RegistrationComponent} from './user/registration/registration.component';
 import {ToastrModule} from "ngx-toastr";
 import {HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from "@angular/material/grid-list";
@@ -29,13 +29,14 @@ import { SellItemDialogComponent } from './items/sell-item-dialog/sell-item-dial
 import { UserPageComponent } from './user/user-page/user-page.component';
 import { ItemOfferDialogComponent } from './shop/item-offer-dialog/item-offer-dialog.component';
 import { SettingsDialogComponent } from './menu/settings-dialog/settings-dialog.component';
+import {ActivationGuard} from "./activation-guard";
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemListComponent,
     ShopComponent,
-    AddUserFormComponent,
+    RegistrationComponent,
     LoginComponent,
     MenuComponent,
     EditItemDialogComponent,
@@ -43,7 +44,7 @@ import { SettingsDialogComponent } from './menu/settings-dialog/settings-dialog.
     SellItemDialogComponent,
     UserPageComponent,
     ItemOfferDialogComponent,
-    SettingsDialogComponent,
+    SettingsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +66,7 @@ import { SettingsDialogComponent } from './menu/settings-dialog/settings-dialog.
     MatDialogModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [ActivationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

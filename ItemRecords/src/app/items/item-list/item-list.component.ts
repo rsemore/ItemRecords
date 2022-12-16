@@ -49,7 +49,7 @@ export class ItemListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.itemService.getAllByUser(this.tokenStorage.getUser().username)
+    this.itemService.getAllByUserId(this.tokenStorage.getUser().userId)
       .subscribe({
         next: data => {
           this.items = data
@@ -90,6 +90,17 @@ export class ItemListComponent implements OnInit {
 
   addItem() {
     this.dialog.open(AddItemDialogComponent, {disableClose: true})
+  }
+
+  confirmDeletion(messageType: string, id: number){
+    if(messageType == 'ITEM') {
+      if(confirm('Opravdu chcete předmět smazat?'))
+        this.deleteItem(id)
+    }
+    if(messageType == 'OFFER') {
+      if(confirm('Opravdu chcete nabídku odstranit?'))
+        this.deleteItemOffer(id)
+    }
   }
 
   deleteItem(itemId: number) {
@@ -138,7 +149,7 @@ export class ItemListComponent implements OnInit {
     this.itemService.deleteItemOffer(offerId)
       .subscribe({
         next: () => {
-          this.toastr.success("Nabídka úspěšně smazána")
+          this.toastr.success("Nabídka úspěšně odstraněna")
           setTimeout(() => {
             location.reload()
           }, 1500);

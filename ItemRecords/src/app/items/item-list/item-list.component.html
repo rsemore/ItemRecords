@@ -3,7 +3,7 @@
   <mat-sidenav mode="side" opened fixedInViewport fixedTopGap="64">
 
     <div class="sidenav-line">
-      <h3>Vyhledávání</h3>
+      <h3>Filtrování</h3>
       <mat-form-field appearance="outline">
         <mat-label>Název předmětu</mat-label>
         <input matInput [(ngModel)]="filterText" type="text" placeholder="hledat...">
@@ -16,7 +16,7 @@
         </mat-select>
       </mat-form-field>
 
-      <a mat-flat-button color="accent" (click)="resetSearch()">Resetovat</a>
+      <a mat-flat-button color="accent" (click)="resetSearch()">Vymazat filtry</a>
 
     </div>
 
@@ -27,13 +27,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <table mat-table [dataSource]="filteredItems" (contentChanged)="items">
-      <!--
-      <ng-container matColumnDef="itemId">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let item">{{item.itemId}}</td>
-      </ng-container>
-      !-->
+    <div *ngIf="filteredItems.length == 0">
+      <i>Nebyly nalezeny žádné předměty</i>
+    </div>
+
+    <table mat-table [dataSource]="filteredItems" (contentChanged)="items" *ngIf="filteredItems.length > 0">
       <ng-container matColumnDef="itemName">
         <th mat-header-cell *matHeaderCellDef>Název</th>
         <td mat-cell *matCellDef="let item">{{item.itemName}}</td>
@@ -52,13 +50,13 @@
           <button mat-icon-button class="icon-edit" (click)="editItem(item.itemId)" *ngIf="!item.itemOffer">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteItem(item.itemId)" *ngIf="!item.itemOffer">
+          <button mat-icon-button color="warn" (click)="confirmDeletion('ITEM', item.itemId)" *ngIf="!item.itemOffer">
             <mat-icon>delete</mat-icon>
           </button>
           <button mat-icon-button class="icon-sell" (click)="sellItem(item.itemId)" *ngIf="!item.itemOffer">
             <mat-icon>add_shopping_cart</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteItemOffer(item.itemOffer.offerId)" *ngIf="item.itemOffer">
+          <button mat-icon-button color="warn" (click)="confirmDeletion('OFFER', item.itemOffer.offerId)" *ngIf="item.itemOffer">
             <mat-icon>remove_shopping_cart</mat-icon>
           </button>
         </td>
@@ -67,4 +65,5 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </mat-sidenav-content>
+
 </mat-sidenav-container>

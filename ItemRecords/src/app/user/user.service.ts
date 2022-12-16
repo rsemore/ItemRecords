@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,20 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  getUserById(userId: number) {
+  getUserById(userId: number): Observable<any> {
     return this.http.get(this.apiUrl + "get/" + userId)
   }
 
-  getAllInterestGroups() {
+  getAllInterestGroups(): Observable<any>  {
     return this.http.get(this.apiUrlGroups + "all")
   }
 
-  joinGroup(groupId: number, userId: number) {
+  joinGroup(groupId: number, userId: number): Observable<any>  {
     return this.http.post<String>(this.apiUrlGroups + groupId + "/user/" + userId, {})
+  }
+
+  removeFromGroup(groupId: number, userId: number): Observable<any> {
+    return this.http.delete(this.apiUrlGroups + groupId + "/delete/user/" + userId)
   }
 
 }

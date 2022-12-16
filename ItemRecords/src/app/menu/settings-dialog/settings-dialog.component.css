@@ -1,3 +1,7 @@
+.dialog {
+  width: 500px;
+}
+
 .form-element {
   width: 100%;
 }
@@ -19,11 +23,72 @@ button:hover {
   background-color: #c22f25;
 }
 
+.icon-close {
+  float: right;
+  transition: 0.3s;
+}
+
+.icon-close:hover{
+  color: #c22f25;
+  cursor: pointer;
+}
+
+
 h2 {
   text-decoration: none;
   font-family: 'Berkshire Swash', cursive;
   font-size: 26px;
   margin-left: 10px;
   padding-right: 10px;
+  float: left;
   transition: 0.3s;
+}
+
+h3 {
+  font-weight: bold;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+
+/* TODO - join/joined interest button -> stop changing size */
+.btn-interest, .btn-joined-interest {
+  background-color: #dcdcdc;
+  color: black;
+  border: none;
+  padding: 10px 10px;
+  width: auto;
+  margin: 5px;
+  transition: 0.5s;
+}
+
+.btn-interest:hover span, .btn-joined-interest:hover span{
+  display: none;
+}
+
+.btn-interest:hover {
+  background-color: #5cce5c;
+  cursor: pointer;
+  width: 20%;
+  height: 38px;
+}
+
+.btn-interest:hover:before {
+  font-family: 'Material Icons';
+  content: '\e145';
+  font-size: 20px;
+  color: #1a561a;
+}
+
+.btn-joined-interest:hover {
+  background-color: #d25951;
+  cursor: pointer;
+  width: 20%;
+}
+
+.btn-joined-interest:hover:before {
+  font-family: 'Material Icons';
+  content: '\e872';
+  font-size: 20px;
+  color: #5d1c17;
 }

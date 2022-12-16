@@ -19,9 +19,12 @@ export class UserPageComponent implements OnInit {
   user: any
   comments: UserComment[] = [];
 
+  isLoggedIn = false
+
   constructor(
     private authService: AuthenticationService,
     private commentService: CommentService,
+    private userService: UserService,
     private tokenStorage: TokenStorageService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
@@ -36,12 +39,15 @@ export class UserPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => this.userId = params['userId'])
+    this.getUserData(this.userId)
     this.router.routeReuseStrategy.shouldReuseRoute = () => false   // reload page on params change
     this.getComments(this.userId)
+    if (this.tokenStorage.getToken() != null)
+      this.isLoggedIn = true
   }
 
   addComment() {
-    let author = this.addCommentForm.value.author
+    let author = this.tokenStorage.getUser().username
     let content = this.addCommentForm.value.content
 
     let userId = this.user.userId
@@ -60,11 +66,11 @@ export class UserPageComponent implements OnInit {
         },
         error: err => {
           this.toastr.error("Chyba při přidávání komentáře")
-          console.log("Error adding comment: " + err.message)
+          console.log("Error adding comment: " + err.error.message)
         }
       });
   }
-/*
+
   getUserData(userId: number) {
     this.userService.getUserById(userId)
       .subscribe({
@@ -74,10 +80,11 @@ export class UserPageComponent implements OnInit {
         },
         error: err => {
           this.toastr.error("Chyba při načítání dat!")
-          console.log("Error getting user! " + err)
+          console.log("Error getting user! " + err.error.message)
+          console.log(err.message)
         }
       })
-  }*/
+  }
 
   getComments(userId: number) {
     this.commentService.getAllByUser(userId)
@@ -88,7 +95,7 @@ export class UserPageComponent implements OnInit {
         },
         error: err => {
           this.toastr.error("Chyba při načítání dat!")
-          console.log("Error loading comments! " + err)
+          console.log("Error loading comments! " + err.error.message)
         }
       })
   }
