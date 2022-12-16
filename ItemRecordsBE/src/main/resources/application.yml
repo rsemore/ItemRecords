@@ -16,5 +16,5 @@ spring:
 application:
   jwt:
     secret-key: superdupersecuredkeyforthisawesomeapplication
-    token-prefix: "Bearer "
-    token-expiration-after-days: 10
+    token-prefix: 'Bearer '
+    token-expiration-after-days: 1

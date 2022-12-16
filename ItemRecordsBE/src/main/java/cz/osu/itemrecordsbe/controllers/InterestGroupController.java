@@ -1,45 +1,31 @@
 package cz.osu.itemrecordsbe.controllers;
 
-import cz.osu.itemrecordsbe.models.AppUser;
-import cz.osu.itemrecordsbe.models.InterestGroup;
-import cz.osu.itemrecordsbe.repositories.AppUserRepository;
-import cz.osu.itemrecordsbe.repositories.InterestGroupRepository;
+import cz.osu.itemrecordsbe.services.InterestGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/groups/")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin
 public class InterestGroupController {
 
     @Autowired
-    private InterestGroupRepository interestGroupRepository;
-
-    @Autowired
-    private AppUserRepository appUserRepository;
+    private InterestGroupService groupService;
 
     @GetMapping("all")
-    ResponseEntity<List<InterestGroup>> getAllInterestGroups() {
-        List<InterestGroup> groups = interestGroupRepository.findAll();
-        for (InterestGroup group : groups) {
-            group.setAppUsers(null);
-        }
-        return ResponseEntity.ok(groups);
+    ResponseEntity<Object> getAllInterestGroups() {
+        return groupService.getAllInterestGroups();
     }
 
-    // TODO - addUserToGroup + clean up + add InterestGroupService
-    /*@PostMapping("{groupId}/user/{userId}")
-    ResponseEntity<String> addUserToGroup(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
-        InterestGroup group = interestGroupRepository.findByGroupId(groupId);
-        AppUser user = appUserRepository.findByUserId(userId);
-        user.addInterestGroup(group);
-        appUserRepository.save(user);
-        return ResponseEntity.ok().build();
-    }*/
+    @PostMapping("{groupId}/user/{userId}")
+    ResponseEntity<Object> addInterestToUser(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
+        return groupService.addInterestToUser(groupId, userId);
+    }
+
+    @DeleteMapping("{groupId}/delete/user/{userId}")
+    ResponseEntity<Object> removeUserFromGroup(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
+        return groupService.removeInterestFromUser(groupId, userId);
+    }
 
 }

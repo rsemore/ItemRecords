@@ -1,15 +1,10 @@
 package cz.osu.itemrecordsbe.controllers;
 
-import cz.osu.itemrecordsbe.models.Item;
 import cz.osu.itemrecordsbe.models.ItemOffer;
-import cz.osu.itemrecordsbe.repositories.ItemOfferRepository;
-import cz.osu.itemrecordsbe.repositories.ItemRepository;
+import cz.osu.itemrecordsbe.services.ItemOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/offers/")
@@ -17,62 +12,26 @@ import java.util.List;
 public class ItemOfferController {
 
     @Autowired
-    ItemOfferRepository itemOfferRepository;
+    private ItemOfferService itemOfferService;
 
-    @Autowired
-    ItemRepository itemRepository;
-
-    // TODO - clean up + add ItemOfferService
     @GetMapping("all")
-    ResponseEntity<List<ItemOffer>> getAll() {
-        List<ItemOffer> offers = itemOfferRepository.findAll();
-        for (ItemOffer offer : offers) {
-            offer.getItem().setItemOffer(null);
-            offer.getItem().getUser().setComments(null);
-            offer.getItem().getUser().setItems(null);
-            offer.getItem().getUser().setInterestGroups(null);
-        }
-        return ResponseEntity.ok(offers);
+    ResponseEntity<Object> getAllItemOffers() {
+        return itemOfferService.getAllItemOffers();
     }
 
-    @GetMapping(value="get/{offerId}")
-    ResponseEntity<ItemOffer> getCommentById(@PathVariable("offerId") Long offerId) {
-        ItemOffer offer = itemOfferRepository.findByOfferId(offerId);
-        offer.getItem().setItemOffer(null);
-        offer.getItem().getUser().setItems(null);
-        offer.getItem().getUser().setComments(null);
-        offer.getItem().getUser().setInterestGroups(null);
-        return ResponseEntity.ok(offer);
+    @GetMapping(value = "get/{offerId}")
+    ResponseEntity<Object> getItemOfferByOfferId(@PathVariable("offerId") Long offerId) {
+        return itemOfferService.getItemOfferByOfferId(offerId);
     }
 
     @PostMapping(value = "sell/{itemId}")
-    ResponseEntity<String> sellItem(@RequestBody ItemOffer itemOffer, @PathVariable("itemId") Long itemId) {
-            Long lastId;
-            if (itemOfferRepository.findAll().isEmpty())
-                lastId = 1L;
-            else {
-                lastId = itemOfferRepository.findTopByOrderByOfferIdDesc().getOfferId();
-                lastId++;
-            }
-            itemOffer.setOfferId(lastId);
-            Item item = itemRepository.findByItemId(itemId);
-            itemOffer.setItem(item);
-            itemOfferRepository.save(itemOffer);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-       // }
+    ResponseEntity<Object> createItemOffer(@RequestBody ItemOffer itemOffer, @PathVariable("itemId") Long itemId) {
+        return itemOfferService.createItemOffer(itemOffer, itemId);
     }
 
     @DeleteMapping(value = "delete/{offerId}")
-    ResponseEntity<String> deleteOffer(@PathVariable("offerId") Long offerId) {
-        if (!itemOfferRepository.existsById(offerId))
-            return new ResponseEntity<>("Offer not found", HttpStatus.BAD_REQUEST);
-        else {
-            ItemOffer offer = itemOfferRepository.findByOfferId(offerId);
-            offer.setItem(null);
-            itemOfferRepository.delete(offer);
-            return new ResponseEntity<>("Offer deleted", HttpStatus.OK);
-        }
+    ResponseEntity<Object> deleteItemOffer(@PathVariable("offerId") Long offerId) {
+        return itemOfferService.deleteItemOffer(offerId);
     }
-
 
 }

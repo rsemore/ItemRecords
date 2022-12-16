@@ -2,25 +2,25 @@
   "groups": [
     {
       "name": "application.jwt",
-      "type": "cz.osu.itemrecordsbe.security.DEPRECATED.jwt.JwtConfig",
-      "sourceType": "cz.osu.itemrecordsbe.security.DEPRECATED.jwt.JwtConfig"
+      "type": "cz.osu.itemrecordsbe.security.jwt.JwtConfig",
+      "sourceType": "cz.osu.itemrecordsbe.security.jwt.JwtConfig"
     }
   ],
   "properties": [
     {
       "name": "application.jwt.secret-key",
       "type": "java.lang.String",
-      "sourceType": "cz.osu.itemrecordsbe.security.DEPRECATED.jwt.JwtConfig"
+      "sourceType": "cz.osu.itemrecordsbe.security.jwt.JwtConfig"
     },
     {
       "name": "application.jwt.token-expiration-after-days",
       "type": "java.lang.Integer",
-      "sourceType": "cz.osu.itemrecordsbe.security.DEPRECATED.jwt.JwtConfig"
+      "sourceType": "cz.osu.itemrecordsbe.security.jwt.JwtConfig"
     },
     {
       "name": "application.jwt.token-prefix",
       "type": "java.lang.String",
-      "sourceType": "cz.osu.itemrecordsbe.security.DEPRECATED.jwt.JwtConfig"
+      "sourceType": "cz.osu.itemrecordsbe.security.jwt.JwtConfig"
     }
   ],
   "hints": []

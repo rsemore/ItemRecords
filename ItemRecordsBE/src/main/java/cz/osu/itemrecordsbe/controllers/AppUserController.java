@@ -1,10 +1,8 @@
 package cz.osu.itemrecordsbe.controllers;
 
 import cz.osu.itemrecordsbe.models.AppUser;
-import cz.osu.itemrecordsbe.models.Comment;
-import cz.osu.itemrecordsbe.models.Item;
-import cz.osu.itemrecordsbe.security.jwt.JwtUtils;
 import cz.osu.itemrecordsbe.security.PasswordConfig;
+import cz.osu.itemrecordsbe.security.jwt.JwtUtils;
 import cz.osu.itemrecordsbe.security.payload.JwtResponse;
 import cz.osu.itemrecordsbe.security.payload.LoginRequest;
 import cz.osu.itemrecordsbe.security.payload.SignupRequest;
@@ -18,12 +16,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users/")
 @CrossOrigin
 public class AppUserController {
+
+    @Autowired
+    private AppUserService userService;
 
     @Autowired
     private PasswordConfig passwordConfig;
@@ -34,29 +34,15 @@ public class AppUserController {
     @Autowired
     private JwtUtils jwtUtils;
 
-    private final AppUserService userService;
-
-    public AppUserController(AppUserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("all")
-    ResponseEntity<List<AppUser>> getAllUsers() {
-        List<AppUser> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+    ResponseEntity<Object> getAllUsers() {
+        return userService.getAllUsers();
     }
 
-    // TODO - getUserById
-    /*@GetMapping("get/{userId}")
-    ResponseEntity<AppUser> getUser(@PathVariable("userId") Long userId) {
-        AppUser user = appUserRepository.findByUserId(userId);
-        user.setItems(null);
-        user.setComments(null);
-        for (InterestGroup interest : user.getInterestGroups()) {
-            interest.setAppUsers(null);
-        }
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }*/
+    @GetMapping("get/{userId}")
+    ResponseEntity<Object> getUserDataByUserId(@PathVariable("userId") Long userId) {
+        return userService.getUserDataByUserId(userId);
+    }
 
     @PostMapping("signup")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
@@ -78,8 +64,8 @@ public class AppUserController {
                 signupRequest.getEmail(),
                 passwordConfig.passwordEncoder().encode(signupRequest.getPassword())
         );
-        userService.createUser(user);
-        return ResponseEntity.ok("User registered successfully!");
+        userService.saveUser(user);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("signin")
@@ -95,18 +81,14 @@ public class AppUserController {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         AppUser user = (AppUser) authentication.getPrincipal();
-        List<String> items = user.getItems().stream()
-                .map(Item::toString).toList();
-        List<String> comments = user.getComments().stream()
-                .map(Comment::toString).toList();
+        user.setItems(null);
+        user.setComments(null);
 
         return ResponseEntity.ok(new JwtResponse(
                 jwt,
                 user.getUserId(),
                 user.getUsername(),
-                user.getEmail(),
-                items,
-                comments
+                user.getEmail()
         ));
     }
 
