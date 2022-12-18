@@ -16,7 +16,7 @@ import {TokenStorageService} from "../authentication/token-storage.service";
 export class UserPageComponent implements OnInit {
 
   userId: number = 0
-  user: any
+  user: any = {}
   comments: UserComment[] = [];
 
   isLoggedIn = false

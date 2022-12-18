@@ -12,9 +12,16 @@
       <mat-form-field appearance="outline">
         <mat-label>Kategorie</mat-label>
         <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="valueChanged()">
-          <mat-option *ngFor="let category of enumKeys" [value]="category" >{{category}}</mat-option>
+          <mat-option *ngFor="let category of enumKeys" [value]="category">{{category}}</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-checkbox
+        color="primary"
+        [(ngModel)]="checkedIsForOffer"
+        (ngModelChange)="filterChange()">
+        Zobrazit aktuální nabídky
+      </mat-checkbox>
 
       <a mat-flat-button color="accent" (click)="resetSearch()">Vymazat filtry</a>
 
@@ -27,11 +34,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div *ngIf="filteredItems.length == 0">
+    <div *ngIf="pageSlice.length == 0">
       <i>Nebyly nalezeny žádné předměty</i>
     </div>
 
-    <table mat-table [dataSource]="filteredItems" (contentChanged)="items" *ngIf="filteredItems.length > 0">
+    <table mat-table [dataSource]="pageSlice" (contentChanged)="items" *ngIf="pageSlice.length > 0">
       <ng-container matColumnDef="itemName">
         <th mat-header-cell *matHeaderCellDef>Název</th>
         <td mat-cell *matCellDef="let item">{{item.itemName}}</td>
@@ -46,7 +53,10 @@
       </ng-container>
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cel *matCellDef="let item">
+        <td mat-cell *matCellDef="let item">
+          <button mat-icon-button color="primary" (click)="showItemDetails(item.itemId)" *ngIf="!item.itemOffer">
+            <mat-icon>info</mat-icon>
+          </button>
           <button mat-icon-button class="icon-edit" (click)="editItem(item.itemId)" *ngIf="!item.itemOffer">
             <mat-icon>edit</mat-icon>
           </button>
@@ -56,7 +66,8 @@
           <button mat-icon-button class="icon-sell" (click)="sellItem(item.itemId)" *ngIf="!item.itemOffer">
             <mat-icon>add_shopping_cart</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="confirmDeletion('OFFER', item.itemOffer.offerId)" *ngIf="item.itemOffer">
+          <button mat-icon-button color="warn" (click)="confirmDeletion('OFFER', item.itemOffer.offerId)"
+                  *ngIf="item.itemOffer">
             <mat-icon>remove_shopping_cart</mat-icon>
           </button>
         </td>
@@ -64,6 +75,15 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <mat-paginator
+      *ngIf="filteredItems.length != 0"
+      [length]="filteredItems.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)"
+      aria-label="Select page">
+    </mat-paginator>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

@@ -1,3 +1,7 @@
+.dialog {
+  width: 40vw;
+}
+
 .form-element {
   width: 100%;
 }
@@ -36,4 +40,24 @@ h2 {
 .icon-close:hover{
   color: #c22f25;
   cursor: pointer;
+}
+
+h3 {
+  font-weight: bold;
+  margin: 0;
+}
+
+a {
+  color: #673AB7;
+  text-decoration: underline;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: #532D96;
+  cursor: pointer;
+}
+
+.offer-details {
+  border-bottom: solid 1px #d2d2d2;
 }

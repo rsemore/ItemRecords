@@ -17,9 +17,9 @@ export class SettingsDialogComponent implements OnInit {
   ) {
   }
 
-  groups: any
+  groups: any = []
   user: any = this.tokenStorage.getUser()
-  userData: any
+  userData: any = {}
 
   ngOnInit(): void {
     this.loadInterests()
@@ -82,6 +82,9 @@ export class SettingsDialogComponent implements OnInit {
   }
 
   checkIfAlreadyJoined(groupIdToCheck: number) {
+    if (this.userData.interestGroups == null)
+      return
+
     let joinedInterestGroups: any[] = []
     for (const group of this.userData.interestGroups)
       joinedInterestGroups.push(group.groupId)

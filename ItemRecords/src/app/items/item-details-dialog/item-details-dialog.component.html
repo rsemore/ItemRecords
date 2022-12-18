@@ -1,0 +1,40 @@
+<div class="dialog">
+
+  <div mat-dialog-title style="display: inline">
+    <h2>Informace</h2>
+    <a mat-dialog-close class="icon-close">
+      <mat-icon style="font-size: 26px">close</mat-icon>
+    </a>
+  </div>
+
+  <div mat-dialog-content style="clear: both">
+
+    <div>
+      <h3>Název</h3>
+      <p>{{item.itemName}}</p>
+
+      <h3>Kategorie</h3>
+      <p>{{item.category}}</p>
+
+      <h3>Popis</h3>
+      <p>
+        <span *ngIf="!item.itemDescription"><i>nevyplněno</i></span>
+        <span *ngIf="item.itemDescription">{{item.itemDescription}}</span>
+      </p>
+
+      <h3>Výrobce / nakladatelství</h3>
+      <p>
+        <span *ngIf="!item.manufacturer"><i>nevyplněno</i></span>
+        <span *ngIf="item.manufacturer">{{item.manufacturer}}</span>
+      </p>
+
+      <h3>Rok výroby / vydání</h3>
+      <p>
+        <span *ngIf="item.yearOfManufacture == 0"><i>nevyplněno</i></span>
+        <span *ngIf="item.yearOfManufacture > 0">{{item.yearOfManufacture}}</span>
+      </p>
+    </div>
+
+  </div>
+
+</div>

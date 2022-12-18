@@ -30,6 +30,9 @@ import { UserPageComponent } from './user/user-page/user-page.component';
 import { ItemOfferDialogComponent } from './shop/item-offer-dialog/item-offer-dialog.component';
 import { SettingsDialogComponent } from './menu/settings-dialog/settings-dialog.component';
 import {ActivationGuard} from "./activation-guard";
+import { ItemDetailsDialogComponent } from './items/item-details-dialog/item-details-dialog.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -44,28 +47,31 @@ import {ActivationGuard} from "./activation-guard";
     SellItemDialogComponent,
     UserPageComponent,
     ItemOfferDialogComponent,
-    SettingsDialogComponent
+    SettingsDialogComponent,
+    ItemDetailsDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatTableModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatSidenavModule,
-    HttpClientModule,
-    FormsModule,
-    ToastrModule.forRoot(),
-    MatGridListModule,
-    MatDialogModule,
-    MatIconModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatTableModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatSidenavModule,
+        HttpClientModule,
+        FormsModule,
+        ToastrModule.forRoot(),
+        MatGridListModule,
+        MatDialogModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatCheckboxModule
+    ],
   providers: [ActivationGuard],
   bootstrap: [AppComponent]
 })

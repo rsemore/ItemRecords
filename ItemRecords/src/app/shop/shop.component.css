@@ -1,5 +1,35 @@
-mat-card {
+.grid-container {
+  width: 95%;
+}
+
+.mat-grid-tile {
   width: 100%;
-  height: 70%;
   margin: 20px;
+  transition: 0.3s;
+}
+
+.mat-grid-tile:hover {
+  background-color: #efefef;
+}
+
+.mat-flat-button {
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.show-offer-btn {
+  background-color: #b6b6b6;
+}
+
+.show-offer-btn:hover {
+  background-color: #868686;
+}
+
+h3 {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.mat-form-field {
+  margin: 0 10px;
 }

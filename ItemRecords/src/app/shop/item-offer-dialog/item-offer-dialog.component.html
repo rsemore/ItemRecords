@@ -1,4 +1,59 @@
-<h2>{{offer.item.itemName}}</h2>
-<div>
-  <a mat-flat-button (click)="openUserPage(offer.item.user)" mat-dialog-close>Prodávající: {{offer.item.user.username}}</a>
+<div class="dialog">
+
+  <div mat-dialog-title style="display: inline">
+    <h2>{{offer.item.itemName}}</h2>
+    <a mat-dialog-close class="icon-close">
+      <mat-icon style="font-size: 26px">close</mat-icon>
+    </a>
+  </div>
+
+  <div mat-dialog-content style="clear: both">
+
+    <div class="offer-details">
+      <h3>Prodávající</h3>
+      <p>
+        <a (click)="openUserPage(offer.item.user)" mat-dialog-close>
+          {{offer.item.user.username}}
+        </a>
+      </p>
+      <div *ngIf="offer.description">
+        <h3>Popis</h3>
+        <p>{{offer.description}}</p>
+      </div>
+
+      <h3>Začátek nabídky</h3>
+      <p>{{this.startDate}}</p>
+
+      <h3>Konec nabídky</h3>
+      <p>{{this.endDate}}</p>
+
+    </div>
+
+    <div class="offer-item-details">
+      <h3>Název</h3>
+      <p>{{offer.item.itemName}}</p>
+
+      <h3>Kategorie</h3>
+      <p>{{offer.item.category}}</p>
+
+      <div *ngIf="offer.item.itemDescription">
+        <h3 >Popis</h3>
+        <p>{{offer.item.itemDescription}}</p>
+      </div>
+
+      <div *ngIf="offer.item.manufacturer">
+        <h3 >Výrobce / nakladatelství</h3>
+        <p>{{offer.item.manufacturer}}</p>
+      </div>
+
+      <div *ngIf="offer.item.yearOfManufacture > 0">
+        <h3 >Rok výroby / vydání</h3>
+        <p>{{offer.item.yearOfManufacture}}</p>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
+

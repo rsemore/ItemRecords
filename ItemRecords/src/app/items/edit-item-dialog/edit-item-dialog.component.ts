@@ -29,7 +29,7 @@ export class EditItemDialogComponent implements OnInit {
     yearOfManufacture: new FormControl(this.data.yearOfManufacture)
   })
 
-  itemName: string = ""
+  itemName: string = ''
 
   ngOnInit(): void {
     console.log(this.data)

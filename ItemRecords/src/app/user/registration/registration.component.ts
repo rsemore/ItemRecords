@@ -44,10 +44,10 @@ export class RegistrationComponent implements OnInit {
         this.router.navigate(["/login"])
       },
       error: err => {
-        this.errorMessage = err.error.message
+        this.errorMessage = err.error
         this.isSignUpFailed = true
-        this.toastr.error("Během registrace došlo k chybě")
-        console.log("Error registering user: " + err.message);
+        this.toastr.error(this.errorMessage)
+        console.log('ERROR:' + this.errorMessage)
       }
     })
   }

@@ -1,5 +1,5 @@
 <div>
-  <h3>Filtrování</h3>
+  <h3>Vyhledat nabídku</h3>
   <mat-form-field appearance="outline">
     <mat-label>Název předmětu</mat-label>
     <input matInput [(ngModel)]="filterText" type="text" placeholder="hledat...">
@@ -8,7 +8,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Kategorie</mat-label>
     <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="valueChanged()">
-      <mat-option *ngFor="let category of enumKeys" [value]="category" >{{category}}</mat-option>
+      <mat-option *ngFor="let category of enumKeys" [value]="category">{{category}}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -22,35 +22,18 @@
     <i>Nebyly nalezeny žádné nabídky</i>
   </div>
 
-  <mat-grid-list cols="3" rowHeight="2:1">
+  <mat-grid-list cols="4" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let offer of filteredOffers" (click)="openOfferDialog(offer.offerId)" style="cursor: pointer">
 
-    <mat-grid-tile *ngFor="let offer of filteredOffers">
-
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <div>
-              {{offer.item.itemName}}
-            </div>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-
-          <div style="background-color: #d5d5d5; border-radius: 25px; padding: 5px">
-            {{offer.price}} Kč
-          </div>
-
-          <div>{{offer.description}}</div>
-          <div>{{offer.item.itemName}}</div>
-          <div>{{offer.item.user.username}}</div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button (click)="openOfferDialog(offer.offerId)">Zobrazit</button>
-        </mat-card-actions>
-      </mat-card>
+      <div>
+        <h2>{{offer.item.itemName}}</h2>
+        <div>{{offer.description}}</div>
+        <div style="background-color: #d5d5d5; border-radius: 25px; padding: 5px; margin: 10px">
+          {{offer.price}} Kč
+        </div>
+      </div>
 
     </mat-grid-tile>
-
   </mat-grid-list>
 
 </div>

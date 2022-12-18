@@ -10,12 +10,12 @@ import {TokenStorageService} from "../authentication/token-storage.service";
 })
 export class LoginComponent implements OnInit {
 
-  username = ""
-  password = ""
+  username = ''
+  password = ''
 
   isLoggedIn = false
   isLoginFailed = false
-  errorMessage = ""
+  errorMessage = ''
   loggedUser: any = {}
 
   constructor(
@@ -36,6 +36,11 @@ export class LoginComponent implements OnInit {
     let username = this.username
     let password = this.password
 
+    if (username == '' || password == ''){
+      this.toastr.warning("Vyplňte přihlašovací údaje")
+      return
+    }
+
     this.authService.login(username, password).subscribe({
       next: data => {
         this.tokenStorage.saveToken(data.token)
@@ -47,9 +52,13 @@ export class LoginComponent implements OnInit {
         window.location.reload()
       },
       error: err => {
-        this.errorMessage = err.error.message
-        this.isLoginFailed = true
-        this.toastr.error("Chyba při přihlašování")
+        if (err.status == 403)
+          this.toastr.warning('Špatné přihlašovací údaje')
+        else {
+          this.errorMessage = err.error.message
+          this.isLoginFailed = true
+          this.toastr.error('Chyba při přihlašování')
+        }
       }
     })
   }

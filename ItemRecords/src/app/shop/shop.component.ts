@@ -19,6 +19,7 @@ export class ShopComponent implements OnInit {
 
   category = Category
   enumKeys: string[] = []
+  selectedCategory: any
 
   get filterText() {
     return this._filterText
@@ -74,8 +75,6 @@ export class ShopComponent implements OnInit {
       })
     }
   }
-
-  selectedCategory: any
 
   valueChanged() {
     console.log("Filtering by category " + this.selectedCategory)

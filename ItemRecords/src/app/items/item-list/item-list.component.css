@@ -13,7 +13,7 @@ mat-sidenav-content {
 .sidenav-line {
   border-bottom: solid 1px #e7e7e7;
   padding: 10px;
-  text-align: left;
+  text-align: center;
   transition: 0.3s;
 }
 
@@ -21,8 +21,9 @@ mat-sidenav-content {
   background-color: #e1e1e1;
 }
 
-.inline-block {
-  display: inline-block;
+h3 {
+  font-weight: bold;
+  margin: 0;
 }
 
 table {
@@ -31,6 +32,14 @@ table {
   text-align: left;
 }
 
+.mat-paginator {
+  width: 95%;
+  display: inline-block;
+}
+
+.mat-column-actions {
+  width: 180px;
+}
 
 .mat-flat-button {
   margin: 15px;
