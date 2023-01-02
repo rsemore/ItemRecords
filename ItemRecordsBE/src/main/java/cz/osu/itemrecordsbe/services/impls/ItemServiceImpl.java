@@ -74,6 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
         Item ret = itemRepository.findByItemId(itemId);
         ret.setUser(null);
+        ret.setItemOffer(null);
 
         return ResponseEntity.ok(ret);
     }

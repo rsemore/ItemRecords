@@ -17,4 +17,4 @@ application:
   jwt:
     secret-key: superdupersecuredkeyforthisawesomeapplication
     token-prefix: 'Bearer '
-    token-expiration-after-days: 1
+    token-expiration-after-ms: 86400000 #1 day

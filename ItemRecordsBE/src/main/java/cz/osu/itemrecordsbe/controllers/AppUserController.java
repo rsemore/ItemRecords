@@ -1,7 +1,6 @@
 package cz.osu.itemrecordsbe.controllers;
 
 import cz.osu.itemrecordsbe.models.AppUser;
-import cz.osu.itemrecordsbe.security.PasswordConfig;
 import cz.osu.itemrecordsbe.security.jwt.JwtUtils;
 import cz.osu.itemrecordsbe.security.payload.JwtResponse;
 import cz.osu.itemrecordsbe.security.payload.LoginRequest;
@@ -13,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +26,7 @@ public class AppUserController {
     private AppUserService userService;
 
     @Autowired
-    private PasswordConfig passwordConfig;
+    PasswordEncoder encoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -49,20 +49,20 @@ public class AppUserController {
         if (userService.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body("Error: Username is already taken!");
+                    .body("Username is already taken!");
         }
 
         if (userService.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body("Error: Email is already registered!");
+                    .body("Email is already registered!");
         }
 
         // Create new user account
         AppUser user = new AppUser(
                 signupRequest.getUsername(),
                 signupRequest.getEmail(),
-                passwordConfig.passwordEncoder().encode(signupRequest.getPassword())
+                encoder.encode(signupRequest.getPassword())
         );
         userService.saveUser(user);
         return ResponseEntity.ok().build();
