@@ -54,7 +54,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let item">
-          <button mat-icon-button color="primary" (click)="showItemDetails(item.itemId)" *ngIf="!item.itemOffer">
+          <button mat-icon-button color="primary" (click)="showItemDetails(item.itemId)">
             <mat-icon>info</mat-icon>
           </button>
           <button mat-icon-button class="icon-edit" (click)="editItem(item.itemId)" *ngIf="!item.itemOffer">

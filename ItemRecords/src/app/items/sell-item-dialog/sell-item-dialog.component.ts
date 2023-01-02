@@ -2,10 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {ItemService} from "../item.service";
-import {AuthenticationService} from "../../user/authentication/authentication.service";
 import {ToastrService} from "ngx-toastr";
-import {Item} from "../item";
 import {TokenStorageService} from "../../user/authentication/token-storage.service";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-sell-item-dialog',

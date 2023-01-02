@@ -37,19 +37,42 @@
       <p>{{offer.item.category}}</p>
 
       <div *ngIf="offer.item.itemDescription">
-        <h3 >Popis</h3>
+        <h3>Popis</h3>
         <p>{{offer.item.itemDescription}}</p>
       </div>
 
       <div *ngIf="offer.item.manufacturer">
-        <h3 >Výrobce / nakladatelství</h3>
+        <h3>Výrobce / nakladatelství</h3>
         <p>{{offer.item.manufacturer}}</p>
       </div>
 
       <div *ngIf="offer.item.yearOfManufacture > 0">
-        <h3 >Rok výroby / vydání</h3>
+        <h3>Rok výroby / vydání</h3>
         <p>{{offer.item.yearOfManufacture}}</p>
       </div>
+
+    </div>
+
+    <div>
+      <h2>Reagovat na nabídku</h2>
+
+      <form [formGroup]="sendEmailForm" (ngSubmit)="sendEmail()" class="form">
+
+        <mat-form-field class="form-element" appearance="outline">
+          <mat-label for="email">Váš email</mat-label>
+          <input matInput type="text" id="email" placeholder="Váš email" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field class="form-element" appearance="outline">
+          <mat-label for="content">Obsah</mat-label>
+          <textarea matInput id="content" formControlName="content" style="height: 100px"></textarea>
+        </mat-form-field>
+
+        <div>
+          <button mat-raised-button color="primary" type="submit" class="form-element">Odeslat</button>
+        </div>
+
+      </form>
 
     </div>
 

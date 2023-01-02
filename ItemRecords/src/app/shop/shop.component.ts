@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {ItemOfferDialogComponent} from "./item-offer-dialog/item-offer-dialog.component";
 import {Category} from "../items/category";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-shop',
@@ -53,10 +54,14 @@ export class ShopComponent implements OnInit {
       })
   }
 
-  openOfferDialog(offerId: number) {
+  openOfferDialog(offerId: number, offerEndDate: string) {
     this.itemOfferService.getById(offerId)
       .subscribe({
         next: result => {
+          if (this.compareDate(offerEndDate)) {
+            this.toastr.info("Nabídka již skončila")
+            return
+          }
           this.dialog.open(ItemOfferDialogComponent, {data: result})
         },
         error: err => {
@@ -87,6 +92,14 @@ export class ShopComponent implements OnInit {
     this.filteredOffers = this.offers
     this.selectedCategory = null
     this._filterText = ""
+  }
+
+  formatDate(date: string) {
+    return formatDate(date, 'd. M. y (H:mm)', 'en-US')
+  }
+
+  compareDate(dateToCompare: string) {
+    return formatDate(new Date(),'yyyy-MM-dd H-mm','en_US') > formatDate(dateToCompare,'yyyy-MM-dd H-mm','en_US')
   }
 
 }

@@ -50,8 +50,6 @@ h3 {
   margin: 10px 0 0 0;
 }
 
-
-/* TODO - join/joined interest button -> stop changing size */
 .btn-interest, .btn-joined-interest {
   background-color: #dcdcdc;
   color: black;
@@ -60,6 +58,7 @@ h3 {
   width: auto;
   margin: 5px;
   transition: 0.5s;
+  min-width: 50px;
 }
 
 .btn-interest:hover span, .btn-joined-interest:hover span{
@@ -70,13 +69,11 @@ h3 {
   background-color: #5cce5c;
   cursor: pointer;
   width: 20%;
-  height: 38px;
 }
 
 .btn-interest:hover:before {
   font-family: 'Material Icons';
   content: '\e145';
-  font-size: 20px;
   color: #1a561a;
 }
 
@@ -89,6 +86,5 @@ h3 {
 .btn-joined-interest:hover:before {
   font-family: 'Material Icons';
   content: '\e872';
-  font-size: 20px;
   color: #5d1c17;
 }
