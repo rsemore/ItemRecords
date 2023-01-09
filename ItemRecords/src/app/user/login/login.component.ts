@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         window.location.reload()
       },
       error: err => {
-        if (err.status == 403)
+        if (err.status == 401 || err.status == 403)
           this.toastr.warning('Špatné přihlašovací údaje')
         else {
           this.errorMessage = err.error.message
