@@ -26,4 +26,8 @@ public interface AppUserService extends UserDetailsService {
 
     ResponseEntity<Object> getUserDataByUserId(Long userId);
 
+    ResponseEntity<Object> registerUser(SignupRequest signupRequest);
+
+    ResponseEntity<Object> loginUser(LoginRequest loginRequest);
+
 }

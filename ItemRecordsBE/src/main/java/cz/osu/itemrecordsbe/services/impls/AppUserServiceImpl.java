@@ -2,13 +2,20 @@ package cz.osu.itemrecordsbe.services.impls;
 
 import cz.osu.itemrecordsbe.models.AppUser;
 import cz.osu.itemrecordsbe.repositories.AppUserRepository;
+import cz.osu.itemrecordsbe.security.jwt.JwtUtils;
+import cz.osu.itemrecordsbe.security.payload.JwtResponse;
+import cz.osu.itemrecordsbe.security.payload.LoginRequest;
+import cz.osu.itemrecordsbe.security.payload.SignupRequest;
 import cz.osu.itemrecordsbe.services.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +25,15 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Autowired
     private AppUserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -84,6 +100,54 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         ret.setPassword(null);
 
         return ResponseEntity.ok(ret);
+    }
+
+    @Override
+    public ResponseEntity<Object> registerUser(SignupRequest signupRequest) {
+        if (this.existsByUsername(signupRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Username is already taken!");
+        }
+
+        if (this.existsByEmail(signupRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Email is already registered!");
+        }
+
+        // Create new user account
+        AppUser user = new AppUser(
+                signupRequest.getUsername(),
+                signupRequest.getEmail(),
+                encoder.encode(signupRequest.getPassword())
+        );
+        this.saveUser(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Object> loginUser(LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        AppUser user = (AppUser) authentication.getPrincipal();
+        user.setItems(null);
+        user.setComments(null);
+
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
+                user.getUserId(),
+                user.getUsername(),
+                user.getEmail()
+        ));
     }
 
 }

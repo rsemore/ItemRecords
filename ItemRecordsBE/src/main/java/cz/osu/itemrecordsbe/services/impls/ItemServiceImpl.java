@@ -40,6 +40,7 @@ public class ItemServiceImpl implements ItemService {
             item.getUser().setItems(null);
             item.getUser().setComments(null);
             item.getUser().setInterestGroups(null);
+            item.getUser().setPassword(null);
         });
 
         return ResponseEntity.ok(ret);
@@ -60,6 +61,7 @@ public class ItemServiceImpl implements ItemService {
             item.getUser().setItems(null);
             item.getUser().setComments(null);
             item.getUser().setInterestGroups(null);
+            item.getUser().setPassword(null);
             if (item.getUser().getUserId().equals(user.getUserId()))
                 ret.add(item);
         });
